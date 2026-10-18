@@ -1,1 +1,946 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  @layer base {
+    html, body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+    body {
+      overscroll-behavior: none;
+    }
+    main>:first-child { margin-top: 0!important; }
+    main>:last-child { margin-bottom: 0!important; }
+  }
+  ::-webkit-scrollbar { display: none; }
 
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+  .font-space-grotesk { font-family: 'Space Grotesk', sans-serif; }
+  .font-inter { font-family: 'Inter', sans-serif; }
+  .font-sora { font-family: 'Sora', sans-serif; }
+
+  /* Cahaya Neon Hijau Lembut di Belakang Card Modal */
+  .card-neon-glow-container {
+    position: relative;
+  }
+  .card-neon-glow-container::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(180deg, rgba(0, 255, 136, 0.4), rgba(16, 185, 129, 0.1), transparent);
+    border-radius: 1rem;
+    filter: blur(16px);
+    z-index: -1;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  /* Modal Transition & Backdrop */
+  #signup-modal {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  #signup-modal.hidden-modal {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  #signup-modal:not(.hidden-modal) {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  #signup-status:empty {
+    display: none;
+  }
+
+  #signup-form button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+  }
+</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0f1715","secondary-container":"#132620","outline":"#2f4f43","primary":"#00ff88","on-surface-variant":"#94a3b8","error-container":"#ffdad6","surface-dim":"#030504","on-primary-fixed-variant":"#004d28","primary-fixed":"#34d399","inverse-on-surface":"#f8fafc","surface":"#050807","on-background":"#f8fafc","on-secondary-fixed-variant":"#6ee7b7","primary-fixed-dim":"#059669","outline-variant":"#1e332a","on-error-container":"#93000a","surface-container-low":"#090e0c","on-primary-fixed":"#022c1b","on-tertiary":"#ffffff","tertiary-container":"#064e3b","on-tertiary-container":"#6ee7b7","surface-tint":"#00ff88","on-surface":"#f8fafc","primary-container":"#00cc6a","on-primary":"#050807","secondary-fixed-dim":"#2d4a3e","secondary":"#64748b","on-error":"#ffffff","surface-container-high":"#14201c","secondary-fixed":"#1e293b","on-tertiary-fixed":"#022c1b","surface-container-highest":"#1b2b25","background":"#050807","inverse-primary":"#059669","tertiary-fixed":"#34d399","tertiary":"#047857","on-secondary-fixed":"#f3f4f6","surface-container-lowest":"#070c0a","error":"#ba1a1a","tertiary-fixed-dim":"#10b981","surface-bright":"#121c18"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"2rem","margin-mobile":"1rem","gutter":"1.5rem","space-md":"1rem","gutter-sm":"1rem","space-xs":"0.25rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xl":"2rem","gutter-lg":"2rem","space-2xl":"3rem"},"fontFamily":{"headline-sm":["Plus Jakarta Sans"],"display-mobile":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"label-sm":["Inter"],"headline-lg-mobile":["Plus Jakarta Sans"],"financial-mono":["Inter"],"label-lg":["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"body-sm":["Inter"],"headline-lg":["Plus Jakarta Sans"],"label-md":["Inter"],"headline-md":["Plus Jakarta Sans"]},"fontSize":{"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"display":["40px",{"lineHeight":"48px","letterSpacing":"-0.025em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"financial-mono":["14px",{"lineHeight":"20px","letterSpacing":"-0.01em","fontWeight":"500"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-md":["22px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}}</script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_20px_rgba(0,255,136,0.08)] border-b border-outline-variant">
+  <div class="h-20 max-w-[1280px] mx-auto px-margin flex items-center justify-between gap-gutter">
+    <div class="flex items-center gap-space-md">
+      <img alt="Logo" class="h-12 w-auto object-contain py-1" src="https://arleta.site/interactivelink/5959/KIRALP-removebg-preview.png"/>
+    </div>
+    <div class="flex items-center gap-space-sm sm:gap-space-md">
+      <div class="hidden sm:flex items-center font-label-md text-label-md text-on-surface-variant">
+        <button class="text-primary font-bold hover:text-primary-fixed transition-colors" type="button">EN</button>
+        <span class="px-space-xs text-outline-variant">|</span>
+        <button class="hover:text-on-surface transition-colors" type="button">BM</button>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <!-- Start Free Trial Button Header -->
+        <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-10 px-3 sm:px-space-lg rounded-lg bg-primary text-on-primary font-label-lg text-xs sm:text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_15px_rgba(0,255,136,0.25)] font-bold no-underline cursor-pointer">
+          Start Free Trial
+        </a>
+        
+        <!-- Sign In Icon Button -->
+        <a href="../login/" title="Sign In" class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline flex items-center justify-center text-primary hover:bg-surface-container-highest hover:border-primary transition-colors cursor-pointer shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">login</span>
+        </a>
+      </div>
+      
+      <!-- Hamburger Menu Button -->
+      <div class="relative">
+        <button aria-label="Toggle Menu" class="w-10 h-10 rounded-lg bg-surface-container-high border border-primary/40 flex items-center justify-center text-primary hover:bg-surface-container-highest transition-colors cursor-pointer" onclick="toggleMobileMenu()" type="button">
+          <span class="material-symbols-outlined text-[22px]" id="menu-icon">menu</span>
+        </button>
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 mt-2 w-48 bg-surface-container-low border border-outline rounded-xl shadow-2xl py-2 hidden z-50 backdrop-blur-md" id="dropdown-menu">
+          <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#Features" onclick="toggleMobileMenu()">Features</a>
+          <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#Pricing" onclick="toggleMobileMenu()">Pricing</a>
+          <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#FAQ" onclick="toggleMobileMenu()">FAQ</a>
+          <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#Contact" onclick="toggleMobileMenu()">Contact</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="w-full pt-20 bg-surface min-h-screen">
+  <div class="flex flex-col w-full">
+    <!-- 1. HERO SECTION -->
+    <section class="w-full py-space-2xl bg-surface relative overflow-hidden">
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div class="max-w-[1280px] mx-auto px-margin relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center">
+          <!-- Left: Copy & CTAs -->
+          <div class="lg:col-span-7 flex flex-col items-start pr-0 lg:pr-space-lg">
+            <div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-secondary-container text-primary font-label-sm text-label-sm uppercase tracking-wider mb-space-md border border-outline">
+              <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+              Next-Gen Sovereign Ledger
+            </div>
+            <h1 class="font-display text-display text-on-surface tracking-tight mb-space-md max-w-xl">
+              Bookkeeping that keeps itself up to date.
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mb-space-xl">
+              Record sales and expenses, keep your receipts, and see how your business is really doing. Built for modern businesses in Brunei.
+            </p>
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-md w-full sm:w-auto">
+              
+              <!-- Start Free Trial Button Hero -->
+              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-12 px-space-xl rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_20px_rgba(0,255,136,0.3)] font-bold no-underline text-center cursor-pointer">
+                Start Free Trial
+              </a>
+              
+              <a class="inline-flex items-center justify-center h-12 px-space-xl rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg border border-outline hover:bg-surface-container-low transition-colors" href="#Pricing">
+                See pricing
+              </a>
+            </div>
+            <span class="font-body-sm text-body-sm text-secondary mt-space-sm">
+              No credit card needed. Secure cryptographic encryption.
+            </span>
+          </div>
+          <!-- Right: Sample Data Preview Card -->
+          <div class="lg:col-span-5 w-full flex justify-center lg:justify-end mt-space-xl lg:mt-0">
+            <div class="w-full max-w-md bg-surface-container-lowest rounded-xl p-space-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-outline relative">
+              <div class="absolute -top-px -left-px -right-px h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-xl"></div>
+              <div class="flex items-center justify-between pb-space-md">
+                <div class="flex items-center gap-space-xs">
+                  <span class="material-symbols-outlined text-primary text-[20px]">account_balance_wallet</span>
+                  <span class="font-label-md text-label-md text-on-surface font-bold">KIRA Neural Ledger</span>
+                </div>
+                <span class="font-label-sm text-label-sm text-primary bg-secondary-container px-space-sm py-space-xs rounded-full border border-outline">
+                  Live Feed
+                </span>
+              </div>
+              <!-- Health Score Section -->
+              <div class="p-space-md rounded-lg bg-surface-container-low mb-space-lg flex items-center justify-between border border-outline-variant">
+                <div>
+                  <span class="block font-label-md text-label-md text-secondary">Business Health Index</span>
+                  <div class="flex items-baseline gap-space-xs mt-0.5">
+                    <span class="font-headline-lg text-headline-lg text-on-surface font-bold">88</span>
+                    <span class="font-body-md text-body-md text-secondary">/ 100</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-sm border border-outline">
+                  <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                  Optimal
+                </div>
+              </div>
+              <!-- Metric Figures -->
+              <div class="space-y-space-md">
+                <div class="flex items-center justify-between p-space-sm rounded bg-surface border border-outline-variant">
+                  <span class="font-body-md text-body-md text-secondary">Revenue</span>
+                  <span class="font-financial-mono text-financial-mono text-on-surface font-semibold">BND 4,850.00</span>
+                </div>
+                <div class="flex items-center justify-between p-space-sm rounded bg-surface border border-outline-variant">
+                  <span class="font-body-md text-body-md text-secondary">Expenses</span>
+                  <span class="font-financial-mono text-financial-mono text-secondary font-semibold">BND 2,120.00</span>
+                </div>
+                <div class="flex items-center justify-between p-space-md rounded-lg bg-secondary-container border border-outline">
+                  <span class="font-label-md text-label-md text-on-surface font-bold">Net profit</span>
+                  <span class="font-financial-mono text-financial-mono text-primary font-bold text-base">BND 2,730.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. WHAT WE OFFER SECTION -->
+    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline-variant" id="Features">
+      <div class="max-w-[1280px] mx-auto px-margin">
+        <div class="max-w-2xl mb-space-2xl">
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Capabilities</span>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            Everything you need to keep your books in order
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+            <div>
+              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">post_add</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Record transactions</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">add sales, purchases and expenses in seconds.</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+            <div>
+              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">receipt_long</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Keep your receipts</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">upload a photo and attach it to the entry.</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+            <div>
+              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">table_chart</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Profit and loss and balance sheet</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">reports built automatically from your entries.</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+            <div>
+              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">monitor_heart</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Business health score</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">one clear score with simple ratings.</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+            <div>
+              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">summarize</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Analysis report</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">a short written review you can download as PDF or Excel.</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+            <div>
+              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">smart_toy</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">AI assistant</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">ask questions about your own records in plain language.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. HOW IT WORKS SECTION -->
+    <section class="w-full py-space-2xl bg-surface">
+      <div class="max-w-[1280px] mx-auto px-margin">
+        <div class="text-center max-w-xl mx-auto mb-space-2xl">
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Onboarding</span>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            Up and running in three steps
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg">
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col items-start relative">
+            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary font-headline-sm text-headline-sm font-bold mb-space-lg border border-outline">1</div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Create your account.</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Get started in seconds with minimal setup and no complex onboarding workflows.</p>
+          </div>
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col items-start relative">
+            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary font-headline-sm text-headline-sm font-bold mb-space-lg border border-outline">2</div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Add your sales and expenses.</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Enter daily transactions seamlessly or photograph receipts for instant documentation.</p>
+          </div>
+          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col items-start relative">
+            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary font-headline-sm text-headline-sm font-bold mb-space-lg border border-outline">3</div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">See your reports and health score.</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Watch real-time financial statements and high-clarity wellness metrics generate automatically.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PRICING SECTION -->
+    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline-variant" id="Pricing">
+      <div class="max-w-[1280px] mx-auto px-margin">
+        <div class="text-center max-w-xl mx-auto mb-space-2xl">
+          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-xs">Simple monthly pricing</h2>
+          <p class="font-body-lg text-body-lg text-on-surface-variant">Prices in BND. Cancel any time.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-stretch mb-space-2xl">
+          <!-- Starter Plan -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-xl flex flex-col justify-between border border-outline">
+            <div>
+              <h3 class="font-headline-md text-headline-md text-on-surface">Starter</h3>
+              <div class="mt-space-md mb-space-lg">
+                <span class="font-display text-display text-on-surface font-bold">BND 25</span>
+                <span class="font-body-md text-body-md text-secondary"> / month</span>
+              </div>
+              <div class="space-y-space-sm pt-space-md">
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">1 user</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Limited transactions per month</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Profit and loss and balance sheet</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Business health score</span></div>
+              </div>
+            </div>
+            <div class="pt-space-xl">
+              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn block text-center w-full h-11 leading-[44px] rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors border border-outline no-underline cursor-pointer">Choose Starter</a>
+            </div>
+          </div>
+          <!-- Business Plan -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-xl flex flex-col justify-between shadow-[0_0_30px_rgba(0,255,136,0.15)] relative border-2 border-primary">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+              <span class="bg-primary text-on-primary font-label-sm text-label-sm font-bold uppercase tracking-wider py-1 px-space-md rounded-full shadow-sm">Most popular</span>
+            </div>
+            <div>
+              <h3 class="font-headline-md text-headline-md text-primary font-bold">Business</h3>
+              <div class="mt-space-md mb-space-lg">
+                <span class="font-display text-display text-on-surface font-bold">BND 50</span>
+                <span class="font-body-md text-body-md text-secondary"> / month</span>
+              </div>
+              <div class="space-y-space-sm pt-space-md">
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface font-semibold">Everything in Starter</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">More users</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Unlimited transactions</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Receipt storage</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Invoicing</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">AI assistant</span></div>
+              </div>
+            </div>
+            <div class="pt-space-xl">
+              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn block text-center w-full h-11 leading-[44px] rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_15px_rgba(0,255,136,0.3)] font-bold no-underline cursor-pointer">Start Free Trial</a>
+            </div>
+          </div>
+          <!-- Premium Plan -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-xl flex flex-col justify-between border border-outline">
+            <div>
+              <h3 class="font-headline-md text-headline-md text-on-surface">Premium</h3>
+              <div class="mt-space-md mb-space-lg">
+                <span class="font-display text-display text-on-surface font-bold">BND 100</span>
+                <span class="font-body-md text-body-md text-secondary"> / month</span>
+              </div>
+              <div class="space-y-space-sm pt-space-md">
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface font-semibold">Everything in Business</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Multiple branches or companies</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Accountant access</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Audit trail</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-secondary text-[18px]">schedule</span><span class="font-body-md text-body-md text-secondary">Bank connection and API (Coming soon)</span></div>
+              </div>
+            </div>
+            <div class="pt-space-xl">
+              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn block text-center w-full h-11 leading-[44px] rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors border border-outline no-underline cursor-pointer">Choose Premium</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. FAQ SECTION -->
+    <section class="w-full py-space-2xl bg-surface" id="FAQ">
+      <div class="max-w-[1280px] mx-auto px-margin">
+        <div class="max-w-2xl mb-space-2xl">
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Answers</span>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Frequently asked questions</h2>
+        </div>
+        <div class="max-w-3xl space-y-space-md" id="faq-accordion">
+          <div class="bg-surface-container-lowest rounded-xl border border-outline overflow-hidden">
+            <button class="w-full p-space-lg flex items-center justify-between text-left focus:outline-none cursor-pointer" onclick="toggleFaq(this)" type="button">
+              <span class="font-headline-sm text-headline-sm text-on-surface">Who is KIRA for?</span>
+              <span class="material-symbols-outlined text-primary transform transition-transform duration-200 rotate-180 faq-icon">expand_more</span>
+            </button>
+            <div class="px-space-lg pb-space-lg block faq-content">
+              <p class="font-body-md text-body-md text-on-surface-variant">KIRA is designed specifically for small business owners, sole proprietors, and freelancers in Brunei who want straightforward bookkeeping without complicated accounting jargon.</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl border border-outline overflow-hidden">
+            <button class="w-full p-space-lg flex items-center justify-between text-left focus:outline-none cursor-pointer" onclick="toggleFaq(this)" type="button">
+              <span class="font-headline-sm text-headline-sm text-on-surface">Is my business data safe?</span>
+              <span class="material-symbols-outlined text-secondary transform transition-transform duration-200 faq-icon">expand_more</span>
+            </button>
+            <div class="px-space-lg pb-space-lg hidden faq-content">
+              <p class="font-body-md text-body-md text-on-surface-variant">Yes, your data is securely stored with encrypted transmission and private account access to protect your business records.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. FINAL CALL TO ACTION -->
+    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline">
+      <div class="max-w-[1280px] mx-auto px-margin text-center">
+        <div class="max-w-2xl mx-auto flex flex-col items-center">
+          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-lg">
+            Ready to see how your business is doing?
+          </h2>
+          <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-12 px-space-2xl rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_20px_rgba(0,255,136,0.3)] font-bold no-underline cursor-pointer">
+            Start Free Trial
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- SIGN UP POPUP MODAL CONTAINER -->
+<div id="signup-modal" class="hidden-modal fixed inset-0 z-50 flex items-center justify-center px-4 py-6 bg-black/80 backdrop-blur-md">
+  <div id="modal-content-box" class="w-full max-w-md max-h-[90vh] overflow-y-auto relative my-auto">
+    
+    <!-- Close Button (X) -->
+    <button onclick="closeSignupModal()" aria-label="Close modal" class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-surface-container-high border border-outline flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-colors cursor-pointer shadow-lg">
+      <span class="material-symbols-outlined text-[20px]">close</span>
+    </button>
+
+    <!-- Sign Up Card dengan Cahaya Neon Hijau -->
+    <div class="card-neon-glow-container">
+      <div class="bg-surface-container-lowest/95 backdrop-blur-xl rounded-2xl p-space-lg shadow-[0_20px_50px_rgba(0,0,0,0.9)] border border-outline relative">
+        <div class="absolute -top-px -left-px -right-px h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-2xl"></div>
+        
+        <!-- Welcome / Header Section -->
+        <div class="text-center mb-1 flex flex-col items-center">
+          <div id="particle-moon-container" class="w-32 h-32 sm:w-36 sm:h-36 mb-1 relative flex items-center justify-center overflow-visible"></div>
+          <h1 class="font-space-grotesk text-[24px] md:text-[28px] text-on-surface tracking-wide font-bold leading-none drop-shadow-md mb-2">Create Account</h1>
+          <p class="font-sora text-[11px] text-on-surface-variant mb-4">Power Your Business with KIRA</p>
+        </div>
+
+        <!-- Sign Up Form (Synced with Firebase & Realtime Database) -->
+        <form id="signup-form" class="w-full space-y-2.5">
+          
+          <!-- Full Name Input -->
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+              <span class="material-symbols-outlined text-[18px]">person</span>
+            </span>
+            <input id="full-name" name="fullName" class="w-full h-10 pl-10 pr-3 rounded-lg bg-surface-container-low border border-outline text-on-surface placeholder:text-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora" placeholder="Full Name" type="text" autocomplete="name" required/>
+          </div>
+
+          <!-- Business Name Input -->
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+              <span class="material-symbols-outlined text-[18px]">business</span>
+            </span>
+            <input id="business-name" name="businessName" class="w-full h-10 pl-10 pr-3 rounded-lg bg-surface-container-low border border-outline text-on-surface placeholder:text-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora" placeholder="Business Name" type="text" autocomplete="organization" required/>
+          </div>
+
+          <!-- Email Input -->
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+              <span class="material-symbols-outlined text-[18px]">mail</span>
+            </span>
+            <input id="email" name="email" class="w-full h-10 pl-10 pr-3 rounded-lg bg-surface-container-low border border-outline text-on-surface placeholder:text-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora" placeholder="Email Address" type="email" autocomplete="email" required/>
+          </div>
+
+          <!-- Business Type Selector -->
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+              <span class="material-symbols-outlined text-[18px]">category</span>
+            </span>
+            <select id="business-type" name="businessType" class="w-full h-10 pl-10 pr-3 rounded-lg bg-surface-container-low border border-outline text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora appearance-none cursor-pointer" required>
+              <option value="" disabled selected>Select Business Type</option>
+              <option value="sole_proprietorship">Sole Proprietorship (Pemilikan Tunggal)</option>
+              <option value="sendirian_berhad">Sendirian Berhad (Sdn Bhd)</option>
+              <option value="partnership">Partnership (Perkongsian)</option>
+              <option value="freelance">Freelance / Consultant</option>
+              <option value="retail">Retail &amp; F&amp;B</option>
+            </select>
+            <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-secondary">
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </span>
+          </div>
+
+          <!-- Country & Currency (Auto-set Brunei & BND) -->
+          <div class="grid grid-cols-2 gap-2">
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+                <span class="material-symbols-outlined text-[18px]">public</span>
+              </span>
+              <input class="w-full h-10 pl-10 pr-3 rounded-lg bg-surface-container-low/60 border border-outline text-on-surface-variant text-xs font-sora cursor-not-allowed" type="text" value="Brunei Darussalam" disabled readonly/>
+            </div>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+                <span class="material-symbols-outlined text-[18px]">payments</span>
+              </span>
+              <input class="w-full h-10 pl-10 pr-3 rounded-lg bg-surface-container-low/60 border border-outline text-on-surface-variant text-xs font-sora cursor-not-allowed" type="text" value="BND (Brunei Dollar)" disabled readonly/>
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+              <span class="material-symbols-outlined text-[18px]">lock</span>
+            </span>
+            <input class="w-full h-10 pl-10 pr-10 rounded-lg bg-surface-container-low border border-outline text-on-surface placeholder:text-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora" id="password-input" name="password" placeholder="Password" type="password" autocomplete="new-password" minlength="6" required/>
+            <button class="absolute inset-y-0 right-0 pr-space-md flex items-center text-secondary hover:text-on-surface transition-colors cursor-pointer" onclick="togglePassword('password-input', 'toggle-icon-1')" type="button">
+              <span class="material-symbols-outlined text-[18px]" id="toggle-icon-1">visibility</span>
+            </button>
+          </div>
+
+          <!-- Confirm Password Input -->
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+              <span class="material-symbols-outlined text-[18px]">lock_reset</span>
+            </span>
+            <input class="w-full h-10 pl-10 pr-10 rounded-lg bg-surface-container-low border border-outline text-on-surface placeholder:text-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora" id="confirm-password-input" name="confirmPassword" placeholder="Confirm Password" type="password" autocomplete="new-password" minlength="6" required/>
+            <button class="absolute inset-y-0 right-0 pr-space-md flex items-center text-secondary hover:text-on-surface transition-colors cursor-pointer" onclick="togglePassword('confirm-password-input', 'toggle-icon-2')" type="button">
+              <span class="material-symbols-outlined text-[18px]" id="toggle-icon-2">visibility</span>
+            </button>
+          </div>
+
+          <!-- Terms & Conditions check -->
+          <div class="flex items-center gap-2 pt-1">
+            <input type="checkbox" id="terms" name="terms" class="rounded bg-surface-container-low border-outline text-primary focus:ring-primary h-3.5 w-3.5 cursor-pointer" required/>
+            <label for="terms" class="text-[11px] text-on-surface-variant font-sora">I agree to KIRA <a href="#" class="text-primary hover:underline">Terms of Service</a> &amp; <a href="#" class="text-primary hover:underline">Privacy Policy</a></label>
+          </div>
+
+          <!-- Status Message -->
+          <p id="signup-status" class="text-xs font-sora text-center" role="status" aria-live="polite"></p>
+
+          <!-- Submit Button -->
+          <button id="signup-submit" class="w-full py-space-md px-space-md rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_20px_rgba(0,255,136,0.25)] font-bold cursor-pointer flex items-center justify-center text-sm mt-2 font-sora" type="submit">
+            Create account
+          </button>
+        </form>
+
+        <!-- Divider / Link to Sign In -->
+        <div class="mt-3 pt-2 border-t border-outline text-center">
+          <p class="text-[11px] text-on-surface-variant font-sora">
+            Already have an account? 
+            <a href="../login/" class="text-primary font-bold hover:underline">
+              Sign In
+            </a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Data Protected Footer -->
+    <div class="text-center mt-3 flex items-center justify-center gap-1.5 text-on-surface-variant text-[11px] font-inter">
+      <span class="material-symbols-outlined text-primary text-[16px] drop-shadow-[0_0_8px_rgba(0,255,136,0.6)]">verified_user</span>
+      <span>Your data is protected</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- Three.js Scripts for 3D Particle Network Animation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('dropdown-menu');
+    const icon = document.getElementById('menu-icon');
+    menu.classList.toggle('hidden');
+    icon.textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+  }
+
+  function toggleFaq(btn) {
+    const content = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    const isHidden = content.classList.contains('hidden');
+    
+    document.querySelectorAll('#faq-accordion .faq-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('#faq-accordion .faq-icon').forEach(el => {
+      el.classList.remove('rotate-180', 'text-primary');
+      el.classList.add('text-secondary');
+    });
+
+    if (isHidden) {
+      content.classList.remove('hidden');
+      icon.classList.add('rotate-180', 'text-primary');
+      icon.classList.remove('text-secondary');
+    }
+  }
+
+  // Modal Control Functions
+  const modal = document.getElementById('signup-modal');
+  let threeInitialized = false;
+
+  function openSignupModal(event) {
+    if (event) event.preventDefault();
+    modal.classList.remove('hidden-modal');
+    document.body.style.overflow = 'hidden';
+    
+    if (!threeInitialized) {
+      initThreeJS();
+      threeInitialized = true;
+    }
+  }
+
+  function closeSignupModal() {
+    modal.classList.add('hidden-modal');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close when clicking backdrop outside modal box
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeSignupModal();
+    }
+  });
+
+  // Close when pressing Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden-modal')) {
+      closeSignupModal();
+    }
+  });
+
+  function togglePassword(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIcon = document.getElementById(iconId);
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      toggleIcon.textContent = 'visibility_off';
+    } else {
+      passwordInput.type = 'password';
+      toggleIcon.textContent = 'visibility';
+    }
+  }
+
+  // Three.js 3D Animation Init
+  function initThreeJS() {
+    const container = document.getElementById('particle-moon-container');
+    if (!container) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 5.2;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const networkGroup = new THREE.Group();
+    scene.add(networkGroup);
+
+    const nodeCount = 38;
+    const nodes = [];
+    const nodePositions = [];
+    const maxConnectionDistance = 1.6;
+
+    for (let i = 0; i < nodeCount; i++) {
+      const u = Math.random();
+      const v = Math.random();
+      const theta = u * 2.0 * Math.PI;
+      const phi = Math.acos(2.0 * v - 1.0);
+      const r = Math.cbrt(Math.random()) * 1.8;
+
+      const sinPhi = Math.sin(phi);
+      const x = r * sinPhi * Math.cos(theta);
+      const y = r * sinPhi * Math.sin(theta);
+      const z = r * Math.cos(phi);
+
+      nodes.push({
+        basePos: new THREE.Vector3(x, y, z),
+        currentPos: new THREE.Vector3(x, y, z),
+        phase: Math.random() * Math.PI * 2
+      });
+      nodePositions.push(x, y, z);
+    }
+
+    const nodeGeo = new THREE.BufferGeometry();
+    nodeGeo.setAttribute('position', new THREE.Float32BufferAttribute(nodePositions, 3));
+
+    const canvasN = document.createElement('canvas');
+    canvasN.width = 64;
+    canvasN.height = 64;
+    const ctxN = canvasN.getContext('2d');
+    let gradN = ctxN.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gradN.addColorStop(0, 'rgba(255,255,255,1)');
+    gradN.addColorStop(0.4, 'rgba(110,231,183,0.9)');
+    gradN.addColorStop(1, 'rgba(6,78,59,0)');
+    ctxN.fillStyle = gradN;
+    ctxN.fillRect(0, 0, 64, 64);
+
+    const nodeTexture = new THREE.CanvasTexture(canvasN);
+    const nodeMat = new THREE.PointsMaterial({
+      size: 0.16,
+      map: nodeTexture,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    const nodePoints = new THREE.Points(nodeGeo, nodeMat);
+    networkGroup.add(nodePoints);
+
+    const lineGeo = new THREE.BufferGeometry();
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x10B981,
+      transparent: true,
+      opacity: 0.3,
+      blending: THREE.AdditiveBlending
+    });
+    const lineSegments = new THREE.LineSegments(lineGeo, lineMat);
+    networkGroup.add(lineSegments);
+
+    const pulseCount = 22;
+    const pulseGeo = new THREE.BufferGeometry();
+    const pulsePositions = new Float32Array(pulseCount * 3);
+    for (let i = 0; i < pulseCount * 3; i++) pulsePositions[i] = 0;
+    pulseGeo.setAttribute('position', new THREE.BufferAttribute(pulsePositions, 3));
+
+    const pulseMat = new THREE.PointsMaterial({
+      size: 0.13,
+      map: nodeTexture,
+      color: 0x6EE7B7,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const pulsePoints = new THREE.Points(pulseGeo, pulseMat);
+    networkGroup.add(pulsePoints);
+
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      let elapsedTime = clock.getElapsedTime();
+
+      networkGroup.rotation.y = elapsedTime * 0.12;
+      networkGroup.rotation.x = Math.sin(elapsedTime * 0.18) * 0.12;
+
+      const posArray = nodeGeo.attributes.position.array;
+      nodes.forEach((node, i) => {
+        node.currentPos.x = node.basePos.x + Math.sin(elapsedTime * 0.7 + node.phase) * 0.15;
+        node.currentPos.y = node.basePos.y + Math.cos(elapsedTime * 0.6 + node.phase) * 0.15;
+        node.currentPos.z = node.basePos.z + Math.sin(elapsedTime * 0.5 + node.phase) * 0.15;
+
+        posArray[i * 3] = node.currentPos.x;
+        posArray[i * 3 + 1] = node.currentPos.y;
+        posArray[i * 3 + 2] = node.currentPos.z;
+      });
+      nodeGeo.attributes.position.needsUpdate = true;
+
+      const linePositions = [];
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dist = nodes[i].currentPos.distanceTo(nodes[j].currentPos);
+          if (dist < maxConnectionDistance) {
+            linePositions.push(
+              nodes[i].currentPos.x, nodes[i].currentPos.y, nodes[i].currentPos.z,
+              nodes[j].currentPos.x, nodes[j].currentPos.y, nodes[j].currentPos.z
+            );
+          }
+        }
+      }
+      lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+
+      const pulsePosArray = pulseGeo.attributes.position.array;
+      for (let i = 0; i < pulseCount; i++) {
+        let n1 = nodes[i % nodes.length].currentPos;
+        let n2 = nodes[(i + 7) % nodes.length].currentPos;
+        let lerpFactor = (Math.sin(elapsedTime * 1.2 + i) + 1) / 2;
+        pulsePosArray[i * 3] = THREE.MathUtils.lerp(n1.x, n2.x, lerpFactor);
+        pulsePosArray[i * 3 + 1] = THREE.MathUtils.lerp(n1.y, n2.y, lerpFactor);
+        pulsePosArray[i * 3 + 2] = THREE.MathUtils.lerp(n1.z, n2.z, lerpFactor);
+      }
+      pulseGeo.attributes.position.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        const width = entry.contentRect.width;
+        const height = entry.contentRect.height;
+        if (width > 0 && height > 0) {
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(width, height);
+        }
+      }
+    });
+    resizeObserver.observe(container);
+  }
+</script>
+
+<!-- Firebase Sign-Up Logic -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getDatabase, ref, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB_3TN44ch2T1-zmOgV8xvlq7r-jR1M8xU",
+    authDomain: "allena-admin.firebaseapp.com",
+    databaseURL: "https://allena-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "allena-admin",
+    storageBucket: "allena-admin.firebasestorage.app",
+    messagingSenderId: "529498448950",
+    appId: "1:529498448950:web:6a836ae249353dcb796497",
+    measurementId: "G-V8RJ0DB6HG"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
+
+  const form = document.getElementById("signup-form");
+  const submitButton = document.getElementById("signup-submit");
+  const statusMessage = document.getElementById("signup-status");
+
+  function showStatus(message, isError = false) {
+    if (!statusMessage) return;
+    statusMessage.textContent = message;
+    statusMessage.className = isError
+      ? "text-xs font-sora text-center text-red-400 mt-2"
+      : "text-xs font-sora text-center text-primary mt-2";
+  }
+
+  function getFriendlyError(error) {
+    const messages = {
+      "auth/email-already-in-use": "This email is already registered. Please sign in.",
+      "auth/invalid-email": "Please enter a valid email address.",
+      "auth/weak-password": "Your password is too weak. Use at least 6 characters.",
+      "auth/operation-not-allowed": "Email/Password registration is not enabled in Firebase.",
+      "auth/network-request-failed": "Network error. Please check your internet connection.",
+      "auth/too-many-requests": "Too many attempts. Please wait and try again."
+    };
+
+    return messages[error.code] || "Registration failed. Please try again. Error: " + (error.code || error.message || "Unknown error");
+  }
+
+  if (form) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      const fullName = document.getElementById("full-name").value.trim();
+      const businessName = document.getElementById("business-name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const businessType = document.getElementById("business-type").value;
+      const password = document.getElementById("password-input").value;
+      const confirmPassword = document.getElementById("confirm-password-input").value;
+      const termsAccepted = document.getElementById("terms").checked;
+
+      if (!fullName || !businessName || !email || !businessType) {
+        showStatus("Please complete all required fields.", true);
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showStatus("Passwords do not match.", true);
+        document.getElementById("confirm-password-input").focus();
+        return;
+      }
+
+      if (password.length < 6) {
+        showStatus("Password must contain at least 6 characters.", true);
+        return;
+      }
+
+      if (!termsAccepted) {
+        showStatus("Please agree to the Terms of Service and Privacy Policy.", true);
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Creating account...";
+      }
+      showStatus("Creating your KIRA account...");
+
+      let user = null;
+
+      try {
+        if (
+          auth.currentUser &&
+          auth.currentUser.email &&
+          auth.currentUser.email.toLowerCase() === email.toLowerCase()
+        ) {
+          user = auth.currentUser;
+        } else {
+          const credential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          user = credential.user;
+        }
+
+        await updateProfile(user, {
+          displayName: fullName
+        });
+
+        showStatus("Saving your business profile...");
+
+        await set(ref(db, `users/${user.uid}`), {
+          uid: user.uid,
+          fullName: fullName,
+          businessName: businessName,
+          email: user.email,
+          businessType: businessType,
+          country: "Brunei Darussalam",
+          currency: "BND",
+          createdAt: serverTimestamp()
+        });
+
+        showStatus("Account created successfully. Opening dashboard...");
+
+        setTimeout(() => {
+          window.location.href = "../dashboard/";
+        }, 1000);
+
+      } catch (error) {
+        console.error("KIRA signup error:", error);
+
+        if (user && error.code !== "auth/email-already-in-use") {
+          showStatus(
+            "Your account may already exist, but saving the profile failed. Please check your connection and Database Rules.",
+            true
+          );
+        } else {
+          showStatus(getFriendlyError(error), true);
+        }
+
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = "Create account";
+        }
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

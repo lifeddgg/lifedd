@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_standard" name="shell-type"/>
+  <title>Dashboard - KIRA Neural Ledger</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+        background-color: #050807 !important;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Soft Neon Green Glow Effect */
+    .card-neon-glow {
+      position: relative;
+    }
+    .card-neon-glow::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(180deg, rgba(0, 255, 136, 0.3), rgba(16, 185, 129, 0.1), transparent);
+      border-radius: 0.85rem;
+      filter: blur(14px);
+      z-index: -1;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    /* Hide dashboard by default to prevent flash of unauthenticated content */
+    body.auth-pending {
+      visibility: hidden;
+      opacity: 0;
+    }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "inverse-surface": "#0f1715",
+            "secondary-container": "#132620",
+            "outline": "#2f4f43",
+            "primary": "#00ff88",
+            "on-surface-variant": "#94a3b8",
+            "error-container": "#ffdad6",
+            "surface-dim": "#030504",
+            "on-primary-fixed-variant": "#004d28",
+            "primary-fixed": "#34d399",
+            "inverse-on-surface": "#f8fafc",
+            "surface": "#050807",
+            "on-background": "#f8fafc",
+            "on-secondary-fixed-variant": "#6ee7b7",
+            "primary-fixed-dim": "#059669",
+            "outline-variant": "#1e332a",
+            "on-error-container": "#93000a",
+            "surface-container-low": "#090e0c",
+            "on-primary-fixed": "#022c1b",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#064e3b",
+            "on-tertiary-container": "#6ee7b7",
+            "surface-tint": "#00ff88",
+            "on-surface": "#f8fafc",
+            "primary-container": "#00cc6a",
+            "on-primary": "#050807",
+            "secondary-fixed-dim": "#2d4a3e",
+            "secondary": "#64748b",
+            "on-error": "#ffffff",
+            "surface-container-high": "#14201c",
+            "secondary-fixed": "#1e293b",
+            "on-tertiary-fixed": "#022c1b",
+            "surface-container-highest": "#1b2b25",
+            "background": "#050807",
+            "inverse-primary": "#059669",
+            "tertiary-fixed": "#34d399",
+            "tertiary": "#047857",
+            "on-secondary-fixed": "#f3f4f6",
+            "surface-container-lowest": "#070c0a",
+            "error": "#ba1a1a",
+            "tertiary-fixed-dim": "#10b981",
+            "surface-bright": "#121c18"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "margin": "2rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "space-2xl": "3rem"
+          },
+          fontFamily: {
+            "headline-sm": ["Plus Jakarta Sans"],
+            "display": ["Plus Jakarta Sans"],
+            "label-sm": ["Inter"],
+            "financial-mono": ["Inter"],
+            "label-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "space-grotesk": ["Space Grotesk", "sans-serif"]
+          },
+          fontSize: {
+            "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "display": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "700"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "financial-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "600"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+            "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400"}],
+            "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "headline-md": ["20px", {"lineHeight": "26px", "letterSpacing": "-0.015em", "fontWeight": "600"}]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased auth-pending">
+  
+  <!-- NAVBAR -->
+  <header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_20px_rgba(0,255,136,0.08)] border-b border-outline-variant">
+    <div class="h-20 max-w-[1400px] mx-auto px-margin flex items-center justify-between gap-gutter">
+      <div class="flex items-center gap-space-md">
+        <img alt="Logo" class="h-10 w-auto object-contain py-1" src="https://arleta.site/interactivelink/5959/KIRALP-removebg-preview.png"/>
+        <span class="text-on-surface font-space-grotesk font-bold text-lg tracking-wider hidden sm:inline-block">KIRA</span>
+      </div>
+      <div class="flex items-center gap-space-md">
+        <div class="hidden sm:flex items-center font-label-md text-label-md text-on-surface-variant">
+          <button class="text-primary font-bold hover:text-primary-fixed transition-colors" type="button">EN</button>
+          <span class="px-space-xs text-outline-variant">|</span>
+          <button class="hover:text-on-surface transition-colors" type="button">BM</button>
+        </div>
+        
+        <!-- User Profile & Sign Out Section -->
+        <div class="flex items-center gap-3 pl-2 border-l border-outline">
+          <div class="flex items-center gap-2">
+            <div id="user-avatar-initials" class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline flex items-center justify-center text-primary font-bold">
+              KS
+            </div>
+            <div class="hidden md:block text-left">
+              <span id="user-display-name" class="block font-label-md text-on-surface font-bold leading-tight">Syarikat Maju Sdn Bhd</span>
+              <span class="block font-body-sm text-secondary">Bandar Seri Begawan</span>
+            </div>
+          </div>
+          
+          <!-- Sign Out Button -->
+          <button id="sign-out" type="button" class="flex items-center gap-1.5 h-9 px-3 rounded-lg bg-surface-container-high hover:bg-error-container hover:text-on-error-container text-on-surface-variant border border-outline transition-colors text-xs font-semibold cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">logout</span>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="w-full pt-28 pb-16 bg-surface min-h-screen px-margin max-w-[1400px] mx-auto">
+    
+    <!-- DASHBOARD HEADER / OVERVIEW -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-space-xl">
+      <div>
+        <h1 class="font-display text-display text-on-surface tracking-tight">Financial Command Center</h1>
+        <p class="font-body-md text-on-surface-variant">Real-time financial tracking, cash flow forecast & AI intelligence for Brunei businesses.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="openReceiptModal()" class="inline-flex items-center gap-2 h-11 px-space-md rounded-lg bg-secondary-container border border-outline text-primary font-label-lg hover:bg-surface-container-high transition-colors font-bold">
+          <span class="material-symbols-outlined text-[20px]">scanner</span> AI Receipt Scanner
+        </button>
+        <button onclick="triggerExport()" class="inline-flex items-center gap-2 h-11 px-space-md rounded-lg bg-primary text-on-primary font-label-lg hover:bg-primary-container transition-colors shadow-[0_0_15px_rgba(0,255,136,0.25)] font-bold">
+          <span class="material-symbols-outlined text-[20px]">download</span> Export Report
+        </button>
+      </div>
+    </div>
+
+    <!-- 1. FINANCIAL SUMMARY METRICS (CARDS) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl">
+      <!-- Card 1: Current Cash Balance -->
+      <div class="card-neon-glow bg-surface-container-lowest p-space-lg rounded-xl border border-outline">
+        <div class="flex items-center justify-between mb-space-sm">
+          <span class="font-label-md text-secondary">Current Cash Balance</span>
+          <span class="material-symbols-outlined text-primary bg-secondary-container p-1.5 rounded-lg border border-outline">account_balance_wallet</span>
+        </div>
+        <div class="font-display text-display text-on-surface font-bold mb-1">BND 48,250.00</div>
+        <div class="flex items-center gap-1 font-body-sm text-primary">
+          <span class="material-symbols-outlined text-[16px]">trending_up</span> +12.4% from last month
+        </div>
+      </div>
+
+      <!-- Card 2: Total Revenue -->
+      <div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline">
+        <div class="flex items-center justify-between mb-space-sm">
+          <span class="font-label-md text-secondary">Total Revenue (MTD)</span>
+          <span class="material-symbols-outlined text-primary bg-secondary-container p-1.5 rounded-lg border border-outline">payments</span>
+        </div>
+        <div class="font-display text-display text-on-surface font-bold mb-1">BND 18,900.00</div>
+        <div class="flex items-center gap-1 font-body-sm text-primary">
+          <span class="material-symbols-outlined text-[16px]">trending_up</span> +8.2% vs target
+        </div>
+      </div>
+
+      <!-- Card 3: Total Expenses -->
+      <div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline">
+        <div class="flex items-center justify-between mb-space-sm">
+          <span class="font-label-md text-secondary">Total Expenses (MTD)</span>
+          <span class="material-symbols-outlined text-secondary bg-surface-container-high p-1.5 rounded-lg border border-outline">receipt_long</span>
+        </div>
+        <div class="font-display text-display text-on-surface font-bold mb-1">BND 7,420.00</div>
+        <div class="flex items-center gap-1 font-body-sm text-secondary">
+          <span class="material-symbols-outlined text-[16px]">check_circle</span> Within budget limit
+        </div>
+      </div>
+
+      <!-- Card 4: Net Profit -->
+      <div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline">
+        <div class="flex items-center justify-between mb-space-sm">
+          <span class="font-label-md text-secondary">Net Profit (MTD)</span>
+          <span class="material-symbols-outlined text-primary bg-secondary-container p-1.5 rounded-lg border border-outline">monitoring</span>
+        </div>
+        <div class="font-display text-display text-primary font-bold mb-1">BND 11,480.00</div>
+        <div class="flex items-center gap-1 font-body-sm text-primary">
+          <span class="material-symbols-outlined text-[16px]">verified</span> 60.7% Profit Margin
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. MAIN GRID: SMART CASH FLOW FORECAST & FINANCIAL HEALTH SCORE -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-xl">
+      
+      <!-- Left: Smart Cash Flow Forecast -->
+      <div class="lg:col-span-8 bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-space-md">
+            <div>
+              <span class="font-label-sm text-primary uppercase tracking-wider block mb-1">AI Intelligence</span>
+              <h2 class="font-headline-md text-headline-md text-on-surface">Smart Cash Flow Forecast (30 Days)</h2>
+            </div>
+            <span class="bg-secondary-container text-primary text-xs px-3 py-1 rounded-full border border-outline font-bold">Simulated Projection</span>
+          </div>
+          <p class="font-body-md text-on-surface-variant mb-space-lg">
+            Based on historical recurring invoices, supplier bills, and seasonal retail trends in Brunei. No immediate cash shortage detected.
+          </p>
+
+          <!-- Visual Cash Flow Chart Simulation -->
+          <div class="space-y-3 bg-surface-container-low p-space-lg rounded-lg border border-outline-variant mb-space-lg">
+            <div class="flex justify-between items-center text-xs text-secondary font-label-sm">
+              <span>Week 1 (BND 45,000)</span>
+              <span>Week 2 (BND 47,200)</span>
+              <span>Week 3 (BND 46,100)</span>
+              <span>Week 4 (BND 48,250)</span>
+            </div>
+            <div class="w-full bg-surface h-3 rounded-full overflow-hidden flex border border-outline">
+              <div class="bg-primary/40 h-full w-1/4"></div>
+              <div class="bg-primary/60 h-full w-1/4"></div>
+              <div class="bg-primary/80 h-full w-1/4"></div>
+              <div class="bg-primary h-full w-1/4"></div>
+            </div>
+            <div class="flex justify-between text-xs text-on-surface font-semibold pt-1">
+              <span>Expected Inflow: +BND 12,500</span>
+              <span class="text-secondary">Expected Outflow: -BND 4,200</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-space-md rounded-lg bg-secondary-container border border-outline flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary text-[24px]">lightbulb</span>
+            <span class="font-body-sm text-on-surface"><strong>AI Recommendation:</strong> Consider settling vendor invoice #884 early to enjoy a 2% prompt-payment discount.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Financial Health Score -->
+      <div class="lg:col-span-4 bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-space-md">
+            <h2 class="font-headline-md text-headline-md text-on-surface">Financial Health Score</h2>
+            <span class="material-symbols-outlined text-primary">health_metrics</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-space-md">
+            <span class="font-display text-[48px] font-bold text-primary">88</span>
+            <span class="font-body-lg text-secondary">/ 100 (Optimal)</span>
+          </div>
+          <div class="w-full bg-surface-container-low h-2.5 rounded-full overflow-hidden mb-space-lg border border-outline-variant">
+            <div class="bg-primary h-full rounded-full" style="width: 88%;"></div>
+          </div>
+
+          <!-- Health Breakdown -->
+          <div class="space-y-3">
+            <div class="flex justify-between text-xs font-body-sm">
+              <span class="text-on-surface-variant">Cash Flow Stability</span>
+              <span class="text-primary font-bold">92%</span>
+            </div>
+            <div class="flex justify-between text-xs font-body-sm">
+              <span class="text-on-surface-variant">Operating Profitability</span>
+              <span class="text-primary font-bold">85%</span>
+            </div>
+            <div class="flex justify-between text-xs font-body-sm">
+              <span class="text-on-surface-variant">Expense Control</span>
+              <span class="text-primary font-bold">87%</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-space-lg pt-4 border-t border-outline-variant">
+          <span class="text-xs text-secondary block">Simulated index computed from liquidity & margin ratios.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 3. RECENT TRANSACTIONS & UPCOMING COMMITMENTS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-xl">
+      
+      <!-- Recent Transactions Table -->
+      <div class="lg:col-span-8 bg-surface-container-lowest p-space-xl rounded-xl border border-outline">
+        <div class="flex items-center justify-between mb-space-md">
+          <h2 class="font-headline-md text-headline-md text-on-surface">Recent Business Transactions</h2>
+          <button class="text-xs text-primary font-bold hover:underline" type="button">View All</button>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-surface-container-high text-on-surface font-label-md text-label-md border-b border-outline">
+                <th class="py-3 px-4">Description</th>
+                <th class="py-3 px-4">Category</th>
+                <th class="py-3 px-4">Date</th>
+                <th class="py-3 px-4 text-right">Amount (BND)</th>
+              </tr>
+            </thead>
+            <tbody class="font-body-md divide-y divide-outline-variant">
+              <tr class="hover:bg-surface">
+                <td class="py-3 px-4 text-on-surface font-medium flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary text-[18px]">arrow_downward</span> Client Payment - Project Alpha
+                </td>
+                <td class="py-3 px-4 text-secondary">Sales Revenue</td>
+                <td class="py-3 px-4 text-secondary">26 May 2026</td>
+                <td class="py-3 px-4 text-right text-primary font-semibold">+BND 3,500.00</td>
+              </tr>
+              <tr class="hover:bg-surface">
+                <td class="py-3 px-4 text-on-surface font-medium flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error text-[18px]">arrow_upward</span> DST Enterprise Internet Bill
+                </td>
+                <td class="py-3 px-4 text-secondary">Utilities</td>
+                <td class="py-3 px-4 text-secondary">25 May 2026</td>
+                <td class="py-3 px-4 text-right text-on-surface font-semibold">-BND 180.00</td>
+              </tr>
+              <tr class="hover:bg-surface">
+                <td class="py-3 px-4 text-on-surface font-medium flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error text-[18px]">arrow_upward</span> Office Supplies (Gadong Branch)
+                </td>
+                <td class="py-3 px-4 text-secondary">Operations</td>
+                <td class="py-3 px-4 text-secondary">24 May 2026</td>
+                <td class="py-3 px-4 text-right text-on-surface font-semibold">-BND 245.50</td>
+              </tr>
+              <tr class="hover:bg-surface">
+                <td class="py-3 px-4 text-on-surface font-medium flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary text-[18px]">arrow_downward</span> Retail Cash Sales (Bandar)
+                </td>
+                <td class="py-3 px-4 text-secondary">Sales Revenue</td>
+                <td class="py-3 px-4 text-secondary">24 May 2026</td>
+                <td class="py-3 px-4 text-right text-primary font-semibold">+BND 1,220.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Upcoming Financial Commitments -->
+      <div class="lg:col-span-4 bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between">
+        <div>
+          <h2 class="font-headline-md text-headline-md text-on-surface mb-space-md">Upcoming Commitments</h2>
+          <div class="space-y-3">
+            <div class="p-space-md rounded-lg bg-surface-container-low border border-outline-variant flex items-center justify-between">
+              <div>
+                <span class="block font-label-md text-on-surface font-bold">Office Rental (Gadong)</span>
+                <span class="font-body-sm text-secondary">Due in 3 days</span>
+              </div>
+              <span class="font-financial-mono text-on-surface font-semibold">BND 1,500.00</span>
+            </div>
+            <div class="p-space-md rounded-lg bg-surface-container-low border border-outline-variant flex items-center justify-between">
+              <div>
+                <span class="block font-label-md text-on-surface font-bold">TAP & SCP Contribution</span>
+                <span class="font-body-sm text-secondary">Due in 7 days</span>
+              </div>
+              <span class="font-financial-mono text-on-surface font-semibold">BND 850.00</span>
+            </div>
+            <div class="p-space-md rounded-lg bg-surface-container-low border border-outline-variant flex items-center justify-between">
+              <div>
+                <span class="block font-label-md text-on-surface font-bold">Supplier Invoice #402</span>
+                <span class="font-body-sm text-secondary">Due in 12 days</span>
+              </div>
+              <span class="font-financial-mono text-on-surface font-semibold">BND 2,300.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-space-lg pt-4 border-t border-outline-variant text-center">
+          <span class="text-xs text-secondary">Automated reminders enabled for Brunei compliance.</span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- AI RECEIPT SCANNER MODAL (Hidden by default) -->
+  <div id="receipt-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center px-4">
+    <div class="bg-surface-container-lowest border border-outline rounded-2xl max-w-lg w-full p-space-xl relative">
+      <button onclick="closeReceiptModal()" class="absolute top-4 right-4 text-secondary hover:text-on-surface">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <div class="flex items-center gap-3 mb-space-md">
+        <span class="material-symbols-outlined text-primary text-[28px]">scanner</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">AI Receipt & Invoice Scanner</h3>
+      </div>
+      <p class="font-body-md text-on-surface-variant mb-space-lg">
+        Upload a photo or PDF of your business receipt. KIRA AI will automatically extract vendor name, date, tax info, and amount in BND.
+      </p>
+
+      <div class="border-2 border-dashed border-outline rounded-xl p-8 text-center bg-surface-container-low mb-space-lg hover:border-primary transition-colors cursor-pointer">
+        <span class="material-symbols-outlined text-primary text-[40px] mb-2">cloud_upload</span>
+        <span class="block font-label-lg text-on-surface font-bold mb-1">Click to upload receipt</span>
+        <span class="block font-body-sm text-secondary">Supports PNG, JPG, PDF up to 10MB</span>
+      </div>
+
+      <div class="flex justify-end gap-3">
+        <button onclick="closeReceiptModal()" class="px-4 py-2 rounded-lg bg-surface-container-high text-on-surface font-label-md hover:bg-surface-container-highest border border-outline">Cancel</button>
+        <button onclick="simulateScan()" class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md font-bold hover:bg-primary-container">Process with AI</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGN OUT CONFIRMATION MODAL (Hidden by default) -->
+  <div id="signout-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center px-4">
+    <div class="bg-surface-container-lowest border border-outline rounded-2xl max-w-sm w-full p-space-xl relative shadow-[0_0_30px_rgba(0,255,136,0.1)] text-center">
+      <!-- Close Button "X" -->
+      <button id="cancel-signout" class="absolute top-4 right-4 text-secondary hover:text-on-surface cursor-pointer">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+      
+      <p class="font-body-lg text-on-surface font-medium my-6">
+        Are you sure you want to sign out?
+      </p>
+      
+      <div class="flex items-center justify-center gap-3">
+        <button id="confirm-signout" class="w-full py-2.5 rounded-lg bg-primary text-on-primary font-label-md font-bold hover:bg-primary-container transition-colors shadow-[0_0_15px_rgba(0,255,136,0.25)] cursor-pointer text-center">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="w-full bg-surface-container-lowest border-t border-outline">
+    <div class="max-w-[1400px] mx-auto px-margin py-space-xl flex flex-col md:flex-row items-center justify-between gap-space-md text-on-surface-variant font-body-sm">
+      <div>© 2026 KIRA Neural Ledger. All rights reserved.</div>
+      <div class="text-secondary font-label-sm uppercase tracking-wider">Secure SME Financial System • Brunei Darussalam</div>
+    </div>
+  </footer>
+
+  <!-- MODAL & INTERACTION SCRIPT -->
+  <script>
+    function openReceiptModal() {
+      document.getElementById('receipt-modal').classList.remove('hidden');
+    }
+
+    function closeReceiptModal() {
+      document.getElementById('receipt-modal').classList.add('hidden');
+    }
+
+    function simulateScan() {
+      alert('Simulated AI Extraction successful: Vendor: Baiduri Supplier, Amount: BND 340.00. Entry recorded to ledger.');
+      closeReceiptModal();
+    }
+
+    function triggerExport() {
+      alert('Financial report successfully generated and downloaded as Excel/PDF (BND currency format).');
+    }
+  </script>
+
+  <!-- FIREBASE AUTHENTICATION & SECURITY SCRIPT -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_3TN44ch2T1-zmOgV8xvlq7r-jR1M8xU",
+      authDomain: "allena-admin.firebaseapp.com",
+      databaseURL: "https://allena-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "allena-admin",
+      storageBucket: "allena-admin.firebasestorage.app",
+      messagingSenderId: "529498448950",
+      appId: "1:529498448950:web:6a836ae249353dcb796497",
+      measurementId: "G-V8RJ0DB6HG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const displayNameEl = document.getElementById("user-display-name");
+    const avatarInitialsEl = document.getElementById("user-avatar-initials");
+    const signOutButton = document.getElementById("sign-out");
+    const signOutModal = document.getElementById("signout-modal");
+    const cancelSignOutBtn = document.getElementById("cancel-signout");
+    const confirmSignOutBtn = document.getElementById("confirm-signout");
+
+    // Check User Authentication Status
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const userRef = ref(db, `users/${user.uid}`);
+          const snapshot = await get(userRef);
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            if (displayNameEl && userData.businessName) {
+              displayNameEl.textContent = userData.businessName;
+            }
+            if (avatarInitialsEl && userData.businessName) {
+              const initials = userData.businessName
+                .split(" ")
+                .map(word => word[0])
+                .join("")
+                .substring(0, 2)
+                .toUpperCase();
+              avatarInitialsEl.textContent = initials || "KS";
+            }
+          } else if (user.displayName && displayNameEl) {
+            displayNameEl.textContent = user.displayName;
+          }
+        } catch (error) {
+          console.error("Error fetching user profile data:", error);
+        }
+
+        // Show dashboard once authentication is confirmed
+        document.body.classList.remove("auth-pending");
+      } else {
+        // User not logged in, redirect to login page
+        window.location.replace("../login/index.html");
+      }
+    });
+
+    // Show Sign Out Confirmation Modal when button is clicked
+    if (signOutButton) {
+      signOutButton.addEventListener("click", () => {
+        signOutModal.classList.remove("hidden");
+      });
+    }
+
+    // Close Modal when "X" button is clicked
+    if (cancelSignOutBtn) {
+      cancelSignOutBtn.addEventListener("click", () => {
+        signOutModal.classList.add("hidden");
+      });
+    }
+
+    // Perform actual Sign Out when "Yes" is confirmed
+    if (confirmSignOutBtn) {
+      confirmSignOutBtn.addEventListener("click", async () => {
+        try {
+          await signOut(auth);
+          window.location.href = "../login/index.html";
+        } catch (error) {
+          console.error("Sign out error:", error);
+          alert("Sign out failed. Please try again.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

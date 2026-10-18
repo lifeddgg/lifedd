@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Login - KIRA Neural Ledger</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+        height: 100%;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .font-space-grotesk { font-family: 'Space Grotesk', sans-serif; }
+    .font-inter { font-family: 'Inter', sans-serif; }
+    .font-sora { font-family: 'Sora', sans-serif; }
+
+    /* Background Hitam Pekat Tanpa Animasi */
+    #kira-futuristic-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      z-index: -10;
+      pointer-events: none;
+    }
+
+    /* Cahaya Neon Hijau Lembut di Belakang Login Card */
+    .card-neon-glow-container {
+      position: relative;
+    }
+    .card-neon-glow-container::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(180deg, rgba(0, 255, 136, 0.4), rgba(16, 185, 129, 0.1), transparent);
+      border-radius: 1rem;
+      filter: blur(16px);
+      z-index: -1;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "inverse-surface": "#0f1715",
+            "secondary-container": "#132620",
+            "outline": "#2f4f43",
+            "primary": "#00ff88",
+            "on-surface-variant": "#94a3b8",
+            "error-container": "#ffdad6",
+            "surface-dim": "#030504",
+            "on-primary-fixed-variant": "#004d28",
+            "primary-fixed": "#34d399",
+            "inverse-on-surface": "#f8fafc",
+            "surface": "#050807",
+            "on-background": "#f8fafc",
+            "on-secondary-fixed-variant": "#6ee7b7",
+            "primary-fixed-dim": "#059669",
+            "outline-variant": "#1e332a",
+            "on-error-container": "#93000a",
+            "surface-container-low": "#090e0c",
+            "on-primary-fixed": "#022c1b",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#064e3b",
+            "on-tertiary-container": "#6ee7b7",
+            "surface-tint": "#00ff88",
+            "on-surface": "#f8fafc",
+            "primary-container": "#00cc6a",
+            "on-primary": "#050807",
+            "secondary-fixed-dim": "#2d4a3e",
+            "secondary": "#64748b",
+            "on-error": "#ffffff",
+            "surface-container-high": "#14201c",
+            "secondary-fixed": "#1e293b",
+            "on-tertiary-fixed": "#022c1b",
+            "surface-container-highest": "#1b2b25",
+            "background": "#050807",
+            "inverse-primary": "#059669",
+            "tertiary-fixed": "#34d399",
+            "tertiary": "#047857",
+            "on-secondary-fixed": "#f3f4f6",
+            "surface-container-lowest": "#070c0a",
+            "error": "#ba1a1a",
+            "tertiary-fixed-dim": "#10b981",
+            "surface-bright": "#121c18"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "margin": "2rem",
+            "margin-mobile": "1rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem",
+            "gutter-sm": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "gutter-lg": "2rem",
+            "space-2xl": "3rem"
+          },
+          fontSize: {
+            "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "700"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "600"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+            "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400"}],
+            "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-inter text-on-surface antialiased min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+  
+  <!-- Background Hitam Pekat Tanpa Animasi -->
+  <div id="kira-futuristic-bg"></div>
+
+  <!-- Main Login Container (Diubah kepada items-center untuk center menegak) -->
+  <main class="flex-grow flex items-center justify-center px-4 sm:px-margin py-8 relative z-10">
+    <div class="w-full max-w-md">
+      
+      <!-- Welcome Section Container -->
+      <div class="text-center mb-1 flex flex-col items-center">
+        <!-- Financial Network 3D Container -->
+        <div id="particle-moon-container" class="w-48 h-48 sm:w-56 sm:h-56 mb-2 relative flex items-center justify-center overflow-visible"></div>
+        <!-- Teks "Welcome" -->
+        <h1 class="font-space-grotesk text-[32px] md:text-[38px] text-on-surface tracking-wide font-bold leading-none drop-shadow-md mb-2">Welcome</h1>
+        <p class="font-sora text-[11px] text-on-surface-variant mb-8">Sign in to start kira</p>
+      </div>
+
+      <!-- Login Card dengan Cahaya Neon Hijau di Belakang -->
+      <div class="card-neon-glow-container">
+        <div class="bg-surface-container-lowest/90 backdrop-blur-xl rounded-2xl p-space-lg shadow-[0_20px_50px_rgba(0,0,0,0.9)] border border-outline relative">
+          <div class="absolute -top-px -left-px -right-px h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-2xl"></div>
+          
+          <!-- Login Form -->
+          <form id="login-form" class="w-full space-y-3" onsubmit="return false;">
+            
+            <!-- Email Input -->
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+                <span class="material-symbols-outlined text-[18px]">mail</span>
+              </span>
+              <input id="email-input" class="w-full h-10 pl-10 pr-3 rounded-lg bg-surface-container-low border border-outline text-on-surface placeholder:text-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora" placeholder="Email address" type="email" autocomplete="off" required/>
+            </div>
+
+            <!-- Password Input -->
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+                <span class="material-symbols-outlined text-[18px]">lock</span>
+              </span>
+              <input class="w-full h-10 pl-10 pr-10 rounded-lg bg-surface-container-low border border-outline text-on-surface placeholder:text-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora" id="password-input" placeholder="Password" type="password" autocomplete="current-password" required/>
+              <button class="absolute inset-y-0 right-0 pr-space-md flex items-center text-secondary hover:text-on-surface transition-colors cursor-pointer" onclick="togglePassword()" type="button">
+                <span class="material-symbols-outlined text-[18px]" id="toggle-icon">visibility</span>
+              </button>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center text-[11px] font-sora">
+                <a href="../signup/" class="text-primary font-medium hover:underline">Create account</a>
+                <a class="text-primary font-medium hover:underline" href="#">Forgot password?</a>
+              </div>
+            </div>
+
+            <button class="w-full py-space-md px-space-md rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_20px_rgba(0,255,136,0.25)] font-bold cursor-pointer flex items-center justify-center text-sm mt-1 font-sora" type="submit">Sign in</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="text-center mt-space-lg text-on-surface-variant text-[11px] font-inter">Access for KIRA members only © 2026 KIRA.</div>
+    </div>
+  </main>
+
+  <!-- Three.js Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script>
+    const container = document.getElementById('particle-moon-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 5.2;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const networkGroup = new THREE.Group();
+    scene.add(networkGroup);
+
+    const nodeCount = 38;
+    const nodes = [];
+    const nodePositions = [];
+    const maxConnectionDistance = 1.6;
+
+    for (let i = 0; i < nodeCount; i++) {
+      const u = Math.random();
+      const v = Math.random();
+      const theta = u * 2.0 * Math.PI;
+      const phi = Math.acos(2.0 * v - 1.0);
+      const r = Math.cbrt(Math.random()) * 1.8;
+
+      const sinPhi = Math.sin(phi);
+      const x = r * sinPhi * Math.cos(theta);
+      const y = r * sinPhi * Math.sin(theta);
+      const z = r * Math.cos(phi);
+
+      nodes.push({
+        basePos: new THREE.Vector3(x, y, z),
+        currentPos: new THREE.Vector3(x, y, z),
+        phase: Math.random() * Math.PI * 2
+      });
+      nodePositions.push(x, y, z);
+    }
+
+    const nodeGeo = new THREE.BufferGeometry();
+    nodeGeo.setAttribute('position', new THREE.Float32BufferAttribute(nodePositions, 3));
+
+    const canvasN = document.createElement('canvas');
+    canvasN.width = 64;
+    canvasN.height = 64;
+    const ctxN = canvasN.getContext('2d');
+    let gradN = ctxN.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gradN.addColorStop(0, 'rgba(255,255,255,1)');
+    gradN.addColorStop(0.4, 'rgba(110,231,183,0.9)');
+    gradN.addColorStop(1, 'rgba(6,78,59,0)');
+    ctxN.fillStyle = gradN;
+    ctxN.fillRect(0, 0, 64, 64);
+
+    const nodeTexture = new THREE.CanvasTexture(canvasN);
+    const nodeMat = new THREE.PointsMaterial({
+      size: 0.16,
+      map: nodeTexture,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    const nodePoints = new THREE.Points(nodeGeo, nodeMat);
+    networkGroup.add(nodePoints);
+
+    const lineGeo = new THREE.BufferGeometry();
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x10B981,
+      transparent: true,
+      opacity: 0.3,
+      blending: THREE.AdditiveBlending
+    });
+    const lineSegments = new THREE.LineSegments(lineGeo, lineMat);
+    networkGroup.add(lineSegments);
+
+    const pulseCount = 22;
+    const pulseGeo = new THREE.BufferGeometry();
+    const pulsePositions = new Float32Array(pulseCount * 3);
+    for (let i = 0; i < pulseCount * 3; i++) pulsePositions[i] = 0;
+    pulseGeo.setAttribute('position', new THREE.BufferAttribute(pulsePositions, 3));
+
+    const pulseMat = new THREE.PointsMaterial({
+      size: 0.13,
+      map: nodeTexture,
+      color: 0x6EE7B7,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const pulsePoints = new THREE.Points(pulseGeo, pulseMat);
+    networkGroup.add(pulsePoints);
+
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      let elapsedTime = clock.getElapsedTime();
+
+      networkGroup.rotation.y = elapsedTime * 0.12;
+      networkGroup.rotation.x = Math.sin(elapsedTime * 0.18) * 0.12;
+
+      const posArray = nodeGeo.attributes.position.array;
+      nodes.forEach((node, i) => {
+        node.currentPos.x = node.basePos.x + Math.sin(elapsedTime * 0.7 + node.phase) * 0.15;
+        node.currentPos.y = node.basePos.y + Math.cos(elapsedTime * 0.6 + node.phase) * 0.15;
+        node.currentPos.z = node.basePos.z + Math.sin(elapsedTime * 0.5 + node.phase) * 0.15;
+
+        posArray[i * 3] = node.currentPos.x;
+        posArray[i * 3 + 1] = node.currentPos.y;
+        posArray[i * 3 + 2] = node.currentPos.z;
+      });
+      nodeGeo.attributes.position.needsUpdate = true;
+
+      const linePositions = [];
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dist = nodes[i].currentPos.distanceTo(nodes[j].currentPos);
+          if (dist < maxConnectionDistance) {
+            linePositions.push(
+              nodes[i].currentPos.x, nodes[i].currentPos.y, nodes[i].currentPos.z,
+              nodes[j].currentPos.x, nodes[j].currentPos.y, nodes[j].currentPos.z
+            );
+          }
+        }
+      }
+      lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+
+      const pulsePosArray = pulseGeo.attributes.position.array;
+      for (let i = 0; i < pulseCount; i++) {
+        let n1 = nodes[i % nodes.length].currentPos;
+        let n2 = nodes[(i + 7) % nodes.length].currentPos;
+        let lerpFactor = (Math.sin(elapsedTime * 1.2 + i) + 1) / 2;
+        pulsePosArray[i * 3] = THREE.MathUtils.lerp(n1.x, n2.x, lerpFactor);
+        pulsePosArray[i * 3 + 1] = THREE.MathUtils.lerp(n1.y, n2.y, lerpFactor);
+        pulsePosArray[i * 3 + 2] = THREE.MathUtils.lerp(n1.z, n2.z, lerpFactor);
+      }
+      pulseGeo.attributes.position.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        const width = entry.contentRect.width;
+        const height = entry.contentRect.height;
+        if (width > 0 && height > 0) {
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(width, height);
+        }
+      }
+    });
+    resizeObserver.observe(container);
+
+    function togglePassword() {
+      const passwordInput = document.getElementById('password-input');
+      const toggleIcon = document.getElementById('toggle-icon');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.textContent = 'visibility_off';
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.textContent = 'visibility';
+      }
+    }
+  </script>
+
+  <!-- Firebase Authentication SDK Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_3TN44ch2T1-zmOgV8xvlq7r-jR1M8xU",
+      authDomain: "allena-admin.firebaseapp.com",
+      databaseURL: "https://allena-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "allena-admin",
+      storageBucket: "allena-admin.firebasestorage.app",
+      messagingSenderId: "529498448950",
+      appId: "1:529498448950:web:6a836ae249353dcb796497",
+      measurementId: "G-V8RJ0DB6HG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const form = document.getElementById("login-form");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const email = document.getElementById("email-input").value.trim();
+      const password = document.getElementById("password-input").value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "../dashboard/index.html";
+      } catch (error) {
+        console.error(error);
+        alert("Log masuk gagal: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
