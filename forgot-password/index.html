@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Reset Password - KIRA Neural Ledger</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#050807",
+            "surface-container-lowest": "#070c0a",
+            "surface-container-low": "#090e0c",
+            "outline": "#2f4f43",
+            "primary": "#00ff88",
+            "on-surface": "#f8fafc",
+            "on-surface-variant": "#94a3b8",
+            "primary-container": "#00cc6a",
+            "on-primary": "#050807",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface font-['Inter'] text-on-surface min-h-screen flex items-center justify-center px-4">
+
+  <div class="max-w-md w-full bg-surface-container-lowest border border-outline p-8 rounded-2xl shadow-2xl relative">
+    
+    <!-- Logo / Brand Header -->
+    <div class="text-center mb-6">
+      <img alt="Logo" class="h-12 w-auto mx-auto mb-3 object-contain" src="https://arleta.site/interactivelink/5959/KIRALP-removebg-preview.png"/>
+      <h1 class="font-['Plus_Jakarta_Sans'] text-xl font-bold text-on-surface">Reset Your Password</h1>
+      <p class="text-xs text-on-surface-variant mt-1">Enter your registered email address and KiraBot will send you a secure reset link.</p>
+    </div>
+
+    <!-- Feedback Message Box -->
+    <div id="alert-box" class="hidden p-3 rounded-lg text-xs mb-4 font-medium"></div>
+
+    <!-- Reset Form -->
+    <form id="reset-form" onsubmit="handlePasswordReset(event)" class="space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-on-surface-variant mb-1">Email Address</label>
+        <input id="reset-email" type="email" required placeholder="name@company.com.bn" class="w-full bg-surface-container-low border border-outline rounded-xl px-4 py-2.5 text-xs text-on-surface focus:outline-none focus:border-primary"/>
+      </div>
+
+      <button type="submit" id="submit-btn" class="w-full bg-primary text-on-primary py-2.5 rounded-xl font-bold text-xs hover:bg-primary-container transition-colors cursor-pointer shadow-[0_0_15px_rgba(0,255,136,0.2)]">
+        Send Password Reset Link
+      </button>
+    </form>
+
+    <!-- Back to Sign In Link -->
+    <div class="text-center mt-6">
+      <a href="../login/index.html" class="text-xs text-primary hover:underline font-semibold">← Back to Sign In</a>
+    </div>
+  </div>
+
+  <!-- Firebase Integration Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_3TN44ch2T1-zmOgV8xvlq7r-jR1M8xU",
+      authDomain: "allena-admin.firebaseapp.com",
+      databaseURL: "https://allena-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "allena-admin",
+      storageBucket: "allena-admin.firebasestorage.app",
+      messagingSenderId: "529498448950",
+      appId: "1:529498448950:web:6a836ae249353dcb796497",
+      measurementId: "G-V8RJ0DB6HG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.handlePasswordReset = async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('reset-email').value.trim();
+      const alertBox = document.getElementById('alert-box');
+      const submitBtn = document.getElementById('submit-btn');
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending link...";
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        alertBox.className = "p-3 rounded-lg text-xs mb-4 font-medium bg-primary/20 text-primary border border-primary/40";
+        alertBox.textContent = "Password reset email sent! Check your inbox for instructions.";
+        alertBox.classList.remove('hidden');
+        submitBtn.textContent = "Link Sent Successfully";
+      } catch (error) {
+        alertBox.className = "p-3 rounded-lg text-xs mb-4 font-medium bg-error-container text-on-error-container border border-error/40";
+        alertBox.textContent = error.message.replace("Firebase: ", "");
+        alertBox.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send Password Reset Link";
+      }
+    };
+  </script>
+</body>
+</html>

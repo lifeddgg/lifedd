@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Login - KIRA Neural Ledger</title>
+  <title>Login - KIRA</title>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
@@ -13,12 +13,13 @@
         padding: 0;
         scroll-behavior: smooth;
         height: 100%;
+        background-color: #020504 !important;
       }
       body {
         overscroll-behavior: none;
       }
     }
-    ::-webkit-scrollbar {
+    ::-webkit-scrollbar { 
       display: none;
     }
     .font-manrope { font-family: 'Manrope', sans-serif; }
@@ -26,15 +27,93 @@
     .font-inter { font-family: 'Inter', sans-serif; }
     .font-sora { font-family: 'Sora', sans-serif; }
 
-    /* Background Hitam Pekat Tanpa Animasi */
-    #kira-futuristic-bg {
+    /* ==========================================================
+       DYNAMIC MOVING SCREEN BACKGROUND (HIMMAH / AI DASHBOARD STYLE)
+       ========================================================== */
+    #kira-cinematic-bg {
       position: fixed;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000000;
+      width: 100vw;
+      height: 100vh;
+      background: #020504;
       z-index: -10;
       pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* 1. Drifting Ambient Glow Orbs */
+    .aurora-orb-1 {
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.22) 0%, rgba(5, 150, 105, 0.08) 50%, transparent 75%);
+      border-radius: 50%;
+      filter: blur(90px);
+      animation: floatOrb1 12s ease-in-out infinite alternate;
+    }
+
+    .aurora-orb-2 {
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 65vw;
+      height: 65vw;
+      background: radial-gradient(circle, rgba(52, 211, 153, 0.18) 0%, rgba(4, 120, 87, 0.06) 50%, transparent 75%);
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: floatOrb2 15s ease-in-out infinite alternate;
+    }
+
+    /* 2. Moving Cyber Grid Lines across the screen */
+    .cyber-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridDrift 20s linear infinite;
+    }
+
+    /* 3. Sweeping Light Beam */
+    .sweeping-light-beam {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(0, 255, 136, 0.07) 48%,
+        rgba(52, 211, 153, 0.12) 50%,
+        rgba(0, 255, 136, 0.07) 52%,
+        transparent 60%
+      );
+      animation: beamSweep 8s linear infinite;
+    }
+
+    /* KEYFRAME ANIMATIONS FOR THE BACKGROUND */
+    @keyframes floatOrb1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(15vw, 15vh) scale(1.2); }
+    }
+
+    @keyframes floatOrb2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-18vw, -12vh) scale(1.25); }
+    }
+
+    @keyframes gridDrift {
+      0% { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
+    }
+
+    @keyframes beamSweep {
+      0% { transform: rotate(0deg) translateY(-20%); }
+      100% { transform: rotate(360deg) translateY(-20%); }
     }
 
     /* Cahaya Neon Hijau Lembut di Belakang Login Card */
@@ -65,7 +144,7 @@
             "outline": "#2f4f43",
             "primary": "#00ff88",
             "on-surface-variant": "#94a3b8",
-            "error-container": "#ffdad6",
+            "error-container": "#3b0a0a",
             "surface-dim": "#030504",
             "on-primary-fixed-variant": "#004d28",
             "primary-fixed": "#34d399",
@@ -75,7 +154,7 @@
             "on-secondary-fixed-variant": "#6ee7b7",
             "primary-fixed-dim": "#059669",
             "outline-variant": "#1e332a",
-            "on-error-container": "#93000a",
+            "on-error-container": "#ffb4ab",
             "surface-container-low": "#090e0c",
             "on-primary-fixed": "#022c1b",
             "on-tertiary": "#ffffff",
@@ -98,7 +177,7 @@
             "tertiary": "#047857",
             "on-secondary-fixed": "#f3f4f6",
             "surface-container-lowest": "#070c0a",
-            "error": "#ba1a1a",
+            "error": "#ffb4ab",
             "tertiary-fixed-dim": "#10b981",
             "surface-bright": "#121c18"
           },
@@ -124,7 +203,7 @@
           fontSize: {
             "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
             "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "700"}],
-            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "-0.04em", "fontWeight": "600"}],
             "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "600"}],
             "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
             "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
@@ -140,31 +219,43 @@
 </head>
 <body class="font-inter text-on-surface antialiased min-h-screen flex flex-col justify-between relative overflow-x-hidden">
   
-  <!-- Background Hitam Pekat Tanpa Animasi -->
-  <div id="kira-futuristic-bg"></div>
+  <!-- Dynamic Moving Background Engine -->
+  <div id="kira-cinematic-bg">
+    <div class="cyber-grid-overlay"></div>
+    <div class="aurora-orb-1"></div>
+    <div class="aurora-orb-2"></div>
+    <div class="sweeping-light-beam"></div>
+  </div>
 
-  <!-- Main Login Container (Diubah kepada items-center untuk center menegak) -->
+  <!-- Main Login Container -->
   <main class="flex-grow flex items-center justify-center px-4 sm:px-margin py-8 relative z-10">
     <div class="w-full max-w-md">
       
       <!-- Welcome Section Container -->
       <div class="text-center mb-1 flex flex-col items-center">
-        <!-- Financial Network 3D Container -->
+        <!-- Financial Network 3D Animation Container -->
         <div id="particle-moon-container" class="w-48 h-48 sm:w-56 sm:h-56 mb-2 relative flex items-center justify-center overflow-visible"></div>
         <!-- Teks "Welcome" -->
         <h1 class="font-space-grotesk text-[32px] md:text-[38px] text-on-surface tracking-wide font-bold leading-none drop-shadow-md mb-2">Welcome</h1>
-        <p class="font-sora text-[11px] text-on-surface-variant mb-8">Sign in to start kira</p>
+        <!-- CUSTOM SUBTITLE -->
+        <p class="font-sora text-[11px] text-on-surface-variant mb-8">Begin your transaction journey with us</p>
       </div>
 
       <!-- Login Card dengan Cahaya Neon Hijau di Belakang -->
       <div class="card-neon-glow-container">
-        <div class="bg-surface-container-lowest/90 backdrop-blur-xl rounded-2xl p-space-lg shadow-[0_20px_50px_rgba(0,0,0,0.9)] border border-outline relative">
+        <div class="bg-surface-container-lowest/80 backdrop-blur-md rounded-2xl p-space-lg shadow-[0_20px_50px_rgba(0,0,0,0.9)] border border-outline relative">
           <div class="absolute -top-px -left-px -right-px h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-2xl"></div>
           
           <!-- Login Form -->
           <form id="login-form" class="w-full space-y-3" onsubmit="return false;">
             
-            <!-- Email Input -->
+            <!-- Error Message Banner (Styled to match design) -->
+            <div id="error-banner" class="hidden items-center gap-2 p-2.5 rounded-lg bg-error-container/40 border border-error/40 text-error text-[11px] font-sora transition-all animate-shake">
+              <span class="material-symbols-outlined text-[16px]">error</span>
+              <span id="error-text">Invalid email or password</span>
+            </div>
+
+            <!-- Email Input with Mail Icon -->
             <div class="relative">
               <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
                 <span class="material-symbols-outlined text-[18px]">mail</span>
@@ -172,7 +263,7 @@
               <input id="email-input" class="w-full h-10 pl-10 pr-3 rounded-lg bg-surface-container-low border border-outline text-on-surface placeholder:text-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-xs font-sora" placeholder="Email address" type="email" autocomplete="off" required/>
             </div>
 
-            <!-- Password Input -->
+            <!-- Password Input with Lock & Visibility Icons -->
             <div class="relative">
               <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
                 <span class="material-symbols-outlined text-[18px]">lock</span>
@@ -186,7 +277,7 @@
             <div>
               <div class="flex justify-between items-center text-[11px] font-sora">
                 <a href="../signup/" class="text-primary font-medium hover:underline">Create account</a>
-                <a class="text-primary font-medium hover:underline" href="#">Forgot password?</a>
+                <a class="text-primary font-medium hover:underline" href="../forgot-password/index.html">Forgot password?</a>
               </div>
             </div>
 
@@ -199,7 +290,7 @@
     </div>
   </main>
 
-  <!-- Three.js Scripts -->
+  <!-- Three.js Ambient Lighting & Particle Animation Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script>
     const container = document.getElementById('particle-moon-container');
@@ -389,10 +480,15 @@
     const auth = getAuth(app);
 
     const form = document.getElementById("login-form");
+    const errorBanner = document.getElementById("error-banner");
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       event.stopImmediatePropagation();
+
+      // Reset error state
+      errorBanner.classList.add("hidden");
+      errorBanner.classList.remove("flex");
 
       const email = document.getElementById("email-input").value.trim();
       const password = document.getElementById("password-input").value;
@@ -402,7 +498,9 @@
         window.location.href = "../dashboard/index.html";
       } catch (error) {
         console.error(error);
-        alert("Log masuk gagal: " + error.message);
+        // Show styled inline error banner instead of alert
+        errorBanner.classList.remove("hidden");
+        errorBanner.classList.add("flex");
       }
     });
   </script>

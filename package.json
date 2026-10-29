@@ -1,5 +1,23 @@
 {
   "dependencies": {
-    "firebase": "^13.0.0"
+    "clsx": "^2.1.1",
+    "firebase": "^13.1.0",
+    "framer-motion": "^14.7.1",
+    "lucide-react": "^1.63.0",
+    "shaders": "^4.0.5",
+    "tailwind-merge": "^3.7.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.186.0"
+  },
+  "allowScripts": {
+    "@firebase/util@1.15.3": true,
+    "protobufjs@7.6.6": true
+  },
+  "overrides": {
+    "@firebase/firestore": {
+      "@grpc/grpc-js": "^1.14.6"
+    }
   }
 }

@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="web_standard" name="shell-type"/>
+<title>KIRA - Sovereign Ledger & Bookkeeping</title>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -15,6 +16,7 @@
       margin: 0;
       padding: 0;
       scroll-behavior: smooth;
+      background-color: #030504 !important;
     }
     body {
       overscroll-behavior: none;
@@ -29,7 +31,47 @@
   .font-inter { font-family: 'Inter', sans-serif; }
   .font-sora { font-family: 'Sora', sans-serif; }
 
-  /* Cahaya Neon Hijau Lembut di Belakang Card Modal */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(25px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .futuristic-card {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: linear-gradient(145deg, rgba(7, 12, 10, 0.9), rgba(15, 23, 21, 0.8));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+  }
+  .futuristic-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff88, transparent);
+    opacity: 0.2;
+    transition: opacity 0.4s ease;
+  }
+  .futuristic-card:hover {
+    border-color: rgba(0, 255, 136, 0.6) !important;
+    box-shadow: 0 10px 40px rgba(0, 255, 136, 0.12), inset 0 1px 0 rgba(0, 255, 136, 0.2);
+    transform: translateY(-3px);
+  }
+  .futuristic-card:hover::before {
+    opacity: 1;
+  }
+
   .card-neon-glow-container {
     position: relative;
   }
@@ -45,7 +87,6 @@
     pointer-events: none;
   }
 
-  /* Modal Transition & Backdrop */
   #signup-modal {
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
@@ -71,29 +112,23 @@
 </style>
 <script src="https://cdn.tailwindcss.com"></script>
 <script id="tailwind-config">
-tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0f1715","secondary-container":"#132620","outline":"#2f4f43","primary":"#00ff88","on-surface-variant":"#94a3b8","error-container":"#ffdad6","surface-dim":"#030504","on-primary-fixed-variant":"#004d28","primary-fixed":"#34d399","inverse-on-surface":"#f8fafc","surface":"#050807","on-background":"#f8fafc","on-secondary-fixed-variant":"#6ee7b7","primary-fixed-dim":"#059669","outline-variant":"#1e332a","on-error-container":"#93000a","surface-container-low":"#090e0c","on-primary-fixed":"#022c1b","on-tertiary":"#ffffff","tertiary-container":"#064e3b","on-tertiary-container":"#6ee7b7","surface-tint":"#00ff88","on-surface":"#f8fafc","primary-container":"#00cc6a","on-primary":"#050807","secondary-fixed-dim":"#2d4a3e","secondary":"#64748b","on-error":"#ffffff","surface-container-high":"#14201c","secondary-fixed":"#1e293b","on-tertiary-fixed":"#022c1b","surface-container-highest":"#1b2b25","background":"#050807","inverse-primary":"#059669","tertiary-fixed":"#34d399","tertiary":"#047857","on-secondary-fixed":"#f3f4f6","surface-container-lowest":"#070c0a","error":"#ba1a1a","tertiary-fixed-dim":"#10b981","surface-bright":"#121c18"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"2rem","margin-mobile":"1rem","gutter":"1.5rem","space-md":"1rem","gutter-sm":"1rem","space-xs":"0.25rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xl":"2rem","gutter-lg":"2rem","space-2xl":"3rem"},"fontFamily":{"headline-sm":["Plus Jakarta Sans"],"display-mobile":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"label-sm":["Inter"],"headline-lg-mobile":["Plus Jakarta Sans"],"financial-mono":["Inter"],"label-lg":["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"body-sm":["Inter"],"headline-lg":["Plus Jakarta Sans"],"label-md":["Inter"],"headline-md":["Plus Jakarta Sans"]},"fontSize":{"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"display":["40px",{"lineHeight":"48px","letterSpacing":"-0.025em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"financial-mono":["14px",{"lineHeight":"20px","letterSpacing":"-0.01em","fontWeight":"500"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-md":["22px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}}</script>
+tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0f1715","secondary-container":"#132620","outline":"#2f4f43","primary":"#00ff88","on-surface-variant":"#94a3b8","error-container":"#ffdad6","surface-dim":"#030504","on-primary-fixed-variant":"#004d28","primary-fixed":"#34d399","inverse-on-surface":"#f8fafc","surface":"#030504","on-background":"#f8fafc","on-secondary-fixed-variant":"#6ee7b7","primary-fixed-dim":"#059669","outline-variant":"#1e332a","on-error-container":"#93000a","surface-container-low":"#070d0b","on-primary-fixed":"#022c1b","on-tertiary":"#ffffff","tertiary-container":"#064e3b","on-tertiary-container":"#6ee7b7","surface-tint":"#00ff88","on-surface":"#f8fafc","primary-container":"#00cc6a","on-primary":"#030504","secondary-fixed-dim":"#2d4a3e","secondary":"#64748b","on-error":"#ffffff","surface-container-high":"#14201c","secondary-fixed":"#1e293b","on-tertiary-fixed":"#022c1b","surface-container-highest":"#1b2b25","background":"#030504","inverse-primary":"#059669","tertiary-fixed":"#34d399","tertiary":"#047857","on-secondary-fixed":"#f3f4f6","surface-container-lowest":"#070c0a","error":"#ba1a1a","tertiary-fixed-dim":"#10b981","surface-bright":"#121c18"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"2rem","margin-mobile":"1rem","gutter":"1.5rem","space-md":"1rem","gutter-sm":"1rem","space-xs":"0.25rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xl":"2rem","gutter-lg":"2rem","space-2xl":"3rem"},"fontFamily":{"headline-sm":["Plus Jakarta Sans"],"display-mobile":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"label-sm":["Inter"],"headline-lg-mobile":["Plus Jakarta Sans"],"financial-mono":["Inter"],"label-lg":["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"body-sm":["Inter"],"headline-lg":["Plus Jakarta Sans"],"label-md":["Inter"],"headline-md":["Plus Jakarta Sans"]},"fontSize":{"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"display":["40px",{"lineHeight":"48px","letterSpacing":"-0.025em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"financial-mono":["14px",{"lineHeight":"20px","letterSpacing":"-0.01em","fontWeight":"500"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"18px","letterSpacing":"0.005em","fontWeight":"400"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-md":["22px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}}</script>
 </head>
-<body class="bg-surface font-body-md text-on-surface antialiased">
-<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_20px_rgba(0,255,136,0.08)] border-b border-outline-variant">
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_30px_rgba(0,255,136,0.1)] border-b border-outline-variant">
   <div class="h-20 max-w-[1280px] mx-auto px-margin flex items-center justify-between gap-gutter">
     <div class="flex items-center gap-space-md">
-      <img alt="Logo" class="h-12 w-auto object-contain py-1" src="https://arleta.site/interactivelink/5959/KIRALP-removebg-preview.png"/>
+      <img alt="Logo" class="h-12 w-auto object-contain py-1 drop-shadow-[0_0_12px_rgba(0,255,136,0.3)]" src="https://arleta.site/interactivelink/5959/KIRALP-removebg-preview.png"/>
     </div>
     <div class="flex items-center gap-space-sm sm:gap-space-md">
-      <div class="hidden sm:flex items-center font-label-md text-label-md text-on-surface-variant">
-        <button class="text-primary font-bold hover:text-primary-fixed transition-colors" type="button">EN</button>
-        <span class="px-space-xs text-outline-variant">|</span>
-        <button class="hover:text-on-surface transition-colors" type="button">BM</button>
-      </div>
-      
       <div class="flex items-center gap-2">
         <!-- Start Free Trial Button Header -->
-        <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-10 px-3 sm:px-space-lg rounded-lg bg-primary text-on-primary font-label-lg text-xs sm:text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_15px_rgba(0,255,136,0.25)] font-bold no-underline cursor-pointer">
+        <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-10 px-3 sm:px-space-lg rounded-lg bg-primary text-on-primary font-label-lg text-xs sm:text-label-lg hover:bg-primary-container transition-all shadow-[0_0_20px_rgba(0,255,136,0.35)] font-bold no-underline cursor-pointer">
           Start Free Trial
         </a>
         
         <!-- Sign In Icon Button -->
-        <a href="../login/" title="Sign In" class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline flex items-center justify-center text-primary hover:bg-surface-container-highest hover:border-primary transition-colors cursor-pointer shadow-sm">
+        <a href="login/index.html" title="Sign In" class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline flex items-center justify-center text-primary hover:bg-surface-container-highest hover:border-primary transition-colors cursor-pointer shadow-sm">
           <span class="material-symbols-outlined text-[20px]">login</span>
         </a>
       </div>
@@ -105,10 +140,11 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
         </button>
         <!-- Dropdown Menu -->
         <div class="absolute right-0 mt-2 w-48 bg-surface-container-low border border-outline rounded-xl shadow-2xl py-2 hidden z-50 backdrop-blur-md" id="dropdown-menu">
+          <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#WhyKira" onclick="toggleMobileMenu()">Why KIRA</a>
           <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#Features" onclick="toggleMobileMenu()">Features</a>
+          <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#Onboarding" onclick="toggleMobileMenu()">Setup</a>
           <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#Pricing" onclick="toggleMobileMenu()">Pricing</a>
           <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#FAQ" onclick="toggleMobileMenu()">FAQ</a>
-          <a class="block px-4 py-2 font-label-md text-on-surface-variant hover:bg-secondary-container hover:text-primary transition-colors" href="#Contact" onclick="toggleMobileMenu()">Contact</a>
         </div>
       </div>
     </div>
@@ -118,15 +154,15 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
 <main class="w-full pt-20 bg-surface min-h-screen">
   <div class="flex flex-col w-full">
     <!-- 1. HERO SECTION -->
-    <section class="w-full py-space-2xl bg-surface relative overflow-hidden">
-      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+    <section class="w-full py-space-2xl bg-surface relative overflow-hidden animate-fade-in-up">
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 blur-[150px] rounded-full pointer-events-none"></div>
       <div class="max-w-[1280px] mx-auto px-margin relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center">
           <!-- Left: Copy & CTAs -->
           <div class="lg:col-span-7 flex flex-col items-start pr-0 lg:pr-space-lg">
-            <div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-secondary-container text-primary font-label-sm text-label-sm uppercase tracking-wider mb-space-md border border-outline">
+            <div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-secondary-container text-primary font-label-sm text-label-sm uppercase tracking-wider mb-space-md border border-primary/30 shadow-[0_0_15px_rgba(0,255,136,0.15)]">
               <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              Next-Gen Sovereign Ledger
+              Next-Gen Financial Intelligence
             </div>
             <h1 class="font-display text-display text-on-surface tracking-tight mb-space-md max-w-xl">
               Bookkeeping that keeps itself up to date.
@@ -137,58 +173,57 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-md w-full sm:w-auto">
               
               <!-- Start Free Trial Button Hero -->
-              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-12 px-space-xl rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_20px_rgba(0,255,136,0.3)] font-bold no-underline text-center cursor-pointer">
+              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-12 px-space-xl rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all shadow-[0_0_25px_rgba(0,255,136,0.4)] font-bold no-underline text-center cursor-pointer">
                 Start Free Trial
               </a>
               
-              <a class="inline-flex items-center justify-center h-12 px-space-xl rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg border border-outline hover:bg-surface-container-low transition-colors" href="#Pricing">
+              <a class="inline-flex items-center justify-center h-12 px-space-xl rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg border border-outline hover:border-primary/50 transition-all" href="#Pricing">
                 See pricing
               </a>
             </div>
-            <span class="font-body-sm text-body-sm text-secondary mt-space-sm">
-              No credit card needed. Secure cryptographic encryption.
+            <span class="font-body-sm text-body-sm text-secondary mt-space-sm flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-[16px]">lock</span> No payment card required upfront • Full feature access • Cancel anytime
             </span>
           </div>
           <!-- Right: Sample Data Preview Card -->
           <div class="lg:col-span-5 w-full flex justify-center lg:justify-end mt-space-xl lg:mt-0">
-            <div class="w-full max-w-md bg-surface-container-lowest rounded-xl p-space-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-outline relative">
-              <div class="absolute -top-px -left-px -right-px h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-xl"></div>
+            <div class="w-full max-w-md futuristic-card rounded-2xl p-space-xl border border-outline relative">
+              <div class="absolute -top-px -left-px -right-px h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-2xl"></div>
               <div class="flex items-center justify-between pb-space-md">
                 <div class="flex items-center gap-space-xs">
-                  <span class="material-symbols-outlined text-primary text-[20px]">account_balance_wallet</span>
-                  <span class="font-label-md text-label-md text-on-surface font-bold">KIRA Neural Ledger</span>
+                  <span class="material-symbols-outlined text-primary text-[20px] drop-shadow-[0_0_8px_rgba(0,255,136,0.6)]">neurology</span>
+                  <span class="font-label-md text-label-md text-on-surface font-bold">KAI AI Financial Feed</span>
                 </div>
-                <span class="font-label-sm text-label-sm text-primary bg-secondary-container px-space-sm py-space-xs rounded-full border border-outline">
+                <span class="font-label-sm text-label-sm text-primary bg-secondary-container px-space-sm py-space-xs rounded-full border border-outline shadow-[0_0_10px_rgba(0,255,136,0.2)]">
                   Live Feed
                 </span>
               </div>
-              <!-- Health Score Section -->
-              <div class="p-space-md rounded-lg bg-surface-container-low mb-space-lg flex items-center justify-between border border-outline-variant">
+              <!-- Active Status Section -->
+              <div class="p-space-md rounded-xl bg-surface-container-low mb-space-lg flex items-center justify-between border border-outline-variant">
                 <div>
-                  <span class="block font-label-md text-label-md text-secondary">Business Health Index</span>
+                  <span class="block font-label-md text-label-md text-secondary">AI Receipt Parsing</span>
                   <div class="flex items-baseline gap-space-xs mt-0.5">
-                    <span class="font-headline-lg text-headline-lg text-on-surface font-bold">88</span>
-                    <span class="font-body-md text-body-md text-secondary">/ 100</span>
+                    <span class="font-headline-sm text-headline-sm text-on-surface font-bold">Active &amp; Synced</span>
                   </div>
                 </div>
-                <div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-sm border border-outline">
+                <div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-[0_0_12px_rgba(0,255,136,0.25)] border border-primary/40">
                   <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                  Optimal
+                  Ready
                 </div>
               </div>
               <!-- Metric Figures -->
               <div class="space-y-space-md">
-                <div class="flex items-center justify-between p-space-sm rounded bg-surface border border-outline-variant">
+                <div class="flex items-center justify-between p-space-sm rounded-lg bg-surface border border-outline-variant">
                   <span class="font-body-md text-body-md text-secondary">Revenue</span>
                   <span class="font-financial-mono text-financial-mono text-on-surface font-semibold">BND 4,850.00</span>
                 </div>
-                <div class="flex items-center justify-between p-space-sm rounded bg-surface border border-outline-variant">
+                <div class="flex items-center justify-between p-space-sm rounded-lg bg-surface border border-outline-variant">
                   <span class="font-body-md text-body-md text-secondary">Expenses</span>
                   <span class="font-financial-mono text-financial-mono text-secondary font-semibold">BND 2,120.00</span>
                 </div>
-                <div class="flex items-center justify-between p-space-md rounded-lg bg-secondary-container border border-outline">
+                <div class="flex items-center justify-between p-space-md rounded-xl bg-secondary-container border border-primary/40 shadow-[0_0_15px_rgba(0,255,136,0.1)]">
                   <span class="font-label-md text-label-md text-on-surface font-bold">Net profit</span>
-                  <span class="font-financial-mono text-financial-mono text-primary font-bold text-base">BND 2,730.00</span>
+                  <span class="font-financial-mono text-financial-mono text-primary font-bold text-base drop-shadow-[0_0_8px_rgba(0,255,136,0.4)]">BND 2,730.00</span>
                 </div>
               </div>
             </div>
@@ -197,187 +232,258 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
       </div>
     </section>
 
-    <!-- 2. WHAT WE OFFER SECTION -->
-    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline-variant" id="Features">
+    <!-- 2. WHY KIRA? SECTION (3 Core Pillars) - Placed Before Features -->
+    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline-variant animate-fade-in-up" id="WhyKira">
       <div class="max-w-[1280px] mx-auto px-margin">
-        <div class="max-w-2xl mb-space-2xl">
-          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Capabilities</span>
+        <div class="text-center max-w-xl mx-auto mb-space-2xl">
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Our Principles</span>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            Why KIRA?
+          </h2>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-2">
+            Built specifically to solve real bookkeeping challenges for Brunei businesses.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          
+          <!-- Pillar 1: Built for Local Businesses -->
+          <div class="futuristic-card p-8 rounded-2xl border border-outline flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">flag</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Built for Local Businesses</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">Made for Brunei sole proprietors and Sdn Bhd companies using BND currency.</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Security & Privacy -->
+          <div class="futuristic-card p-8 rounded-2xl border border-outline flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">verified_user</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Security &amp; Privacy</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">Your financial records are safely encrypted. We never sell your data.</p>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Automated with AI -->
+          <div class="futuristic-card p-8 rounded-2xl border border-outline flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">auto_awesome</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Automated with KAI AI</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">Skip manual spreadsheets. Scan receipts and get answers in seconds.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. FEATURES SECTION (4 Core Features in 2x2 Grid) -->
+    <section class="w-full py-space-2xl bg-surface border-t border-outline-variant animate-fade-in-up" id="Features">
+      <div class="max-w-[1280px] mx-auto px-margin">
+        <div class="text-center max-w-xl mx-auto mb-space-2xl">
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Features</span>
           <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
             Everything you need to keep your books in order
           </h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          
+          <!-- Card 1: Record transactions -->
+          <div class="futuristic-card p-8 rounded-2xl border border-outline flex flex-col justify-between">
             <div>
-              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+              <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
                 <span class="material-symbols-outlined text-[24px]">post_add</span>
               </div>
               <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Record transactions</h3>
-              <p class="font-body-md text-body-md text-on-surface-variant">add sales, purchases and expenses in seconds.</p>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-6">Add sales, purchases and expenses in seconds with automated categorization.</p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-outline/10">
+              <span class="px-3 py-1 rounded-full bg-surface-container text-xs text-secondary font-medium">Fast Entry</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container text-xs text-secondary font-medium">Auto-Categorize</span>
             </div>
           </div>
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+
+          <!-- Card 2: Keep your receipts -->
+          <div class="futuristic-card p-8 rounded-2xl border border-outline flex flex-col justify-between">
             <div>
-              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+              <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
                 <span class="material-symbols-outlined text-[24px]">receipt_long</span>
               </div>
               <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Keep your receipts</h3>
-              <p class="font-body-md text-body-md text-on-surface-variant">upload a photo and attach it to the entry.</p>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-6">Upload a photo and attach it securely to the entry with AI parsing.</p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-outline/10">
+              <span class="px-3 py-1 rounded-full bg-surface-container text-xs text-secondary font-medium">AI Vision</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container text-xs text-secondary font-medium">Secure Storage</span>
             </div>
           </div>
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+
+          <!-- Card 3: Analysis report -->
+          <div class="futuristic-card p-8 rounded-2xl border border-outline flex flex-col justify-between">
             <div>
-              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
-                <span class="material-symbols-outlined text-[24px]">table_chart</span>
-              </div>
-              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Profit and loss and balance sheet</h3>
-              <p class="font-body-md text-body-md text-on-surface-variant">reports built automatically from your entries.</p>
-            </div>
-          </div>
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
-            <div>
-              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
-                <span class="material-symbols-outlined text-[24px]">monitor_heart</span>
-              </div>
-              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Business health score</h3>
-              <p class="font-body-md text-body-md text-on-surface-variant">one clear score with simple ratings.</p>
-            </div>
-          </div>
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
-            <div>
-              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+              <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
                 <span class="material-symbols-outlined text-[24px]">summarize</span>
               </div>
               <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Analysis report</h3>
-              <p class="font-body-md text-body-md text-on-surface-variant">a short written review you can download as PDF or Excel.</p>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-6">A short written financial review you can download as PDF or Excel.</p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-outline/10">
+              <span class="px-3 py-1 rounded-full bg-surface-container text-xs text-secondary font-medium">PDF / Excel</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container text-xs text-secondary font-medium">Financial Review</span>
             </div>
           </div>
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col justify-between hover:border-primary/50 transition-colors">
+
+          <!-- Card 4: KAI AI agent -->
+          <div class="futuristic-card p-8 rounded-2xl border border-outline flex flex-col justify-between">
             <div>
-              <div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
-                <span class="material-symbols-outlined text-[24px]">smart_toy</span>
+              <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary mb-space-md border border-outline shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">neurology</span>
               </div>
-              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">AI assistant</h3>
-              <p class="font-body-md text-body-md text-on-surface-variant">ask questions about your own records in plain language.</p>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">KAI AI agent</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-6">Ask questions about your own financial records in plain language and get instant guidance.</p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-outline/10">
+              <span class="px-3 py-1 rounded-full bg-surface-container text-xs text-secondary font-medium">Natural Language</span>
+              <span class="px-3 py-1 rounded-full bg-surface-container text-xs text-secondary font-medium">Instant Insights</span>
             </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- 3. HOW IT WORKS SECTION -->
-    <section class="w-full py-space-2xl bg-surface">
-      <div class="max-w-[1280px] mx-auto px-margin">
+    <!-- 4. SETUP TIMELINE JOURNEY SECTION -->
+    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline-variant animate-fade-in-up" id="Onboarding">
+      <div class="max-w-[900px] mx-auto px-margin">
         <div class="text-center max-w-xl mx-auto mb-space-2xl">
-          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Onboarding</span>
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Setup</span>
           <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-            Up and running in three steps
+            How it works in 3 easy steps
           </h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg">
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col items-start relative">
-            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary font-headline-sm text-headline-sm font-bold mb-space-lg border border-outline">1</div>
-            <h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Create your account.</h3>
-            <p class="font-body-md text-body-md text-on-surface-variant">Get started in seconds with minimal setup and no complex onboarding workflows.</p>
+        
+        <!-- Timeline Container with Glowing Neon Path -->
+        <div class="relative pl-6 sm:pl-10 space-y-8 before:absolute before:left-3 sm:before:left-5 before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-primary before:via-primary/50 before:to-primary/10">
+          
+          <!-- Step 1 Card -->
+          <div class="relative futuristic-card p-space-xl rounded-xl border border-outline shadow-lg">
+            <div class="absolute -left-[31px] sm:-left-[47px] top-6 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-secondary-container border-2 border-primary flex items-center justify-center text-primary font-bold shadow-[0_0_20px_rgba(0,255,136,0.4)]">
+              <span class="material-symbols-outlined text-[20px] sm:text-[24px]">person_add</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <span class="text-xs uppercase font-bold text-primary tracking-wider">Step 1</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Create your account</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Sign up for free in seconds with no payment details upfront.</p>
           </div>
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col items-start relative">
-            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary font-headline-sm text-headline-sm font-bold mb-space-lg border border-outline">2</div>
-            <h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">Add your sales and expenses.</h3>
-            <p class="font-body-md text-body-md text-on-surface-variant">Enter daily transactions seamlessly or photograph receipts for instant documentation.</p>
+
+          <!-- Step 2 Card -->
+          <div class="relative futuristic-card p-space-xl rounded-xl border border-outline shadow-lg">
+            <div class="absolute -left-[31px] sm:-left-[47px] top-6 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-secondary-container border-2 border-primary flex items-center justify-center text-primary font-bold shadow-[0_0_20px_rgba(0,255,136,0.4)]">
+              <span class="material-symbols-outlined text-[20px] sm:text-[24px]">receipt_long</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <span class="text-xs uppercase font-bold text-primary tracking-wider">Step 2</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Add sales &amp; expenses</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Type sales or snap a photo of receipts for quick logging.</p>
           </div>
-          <div class="bg-surface-container-lowest p-space-xl rounded-xl border border-outline flex flex-col items-start relative">
-            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary font-headline-sm text-headline-sm font-bold mb-space-lg border border-outline">3</div>
-            <h3 class="font-headline-md text-headline-md text-on-surface mb-space-xs">See your reports and health score.</h3>
-            <p class="font-body-md text-body-md text-on-surface-variant">Watch real-time financial statements and high-clarity wellness metrics generate automatically.</p>
+
+          <!-- Step 3 Card -->
+          <div class="relative futuristic-card p-space-xl rounded-xl border border-outline shadow-lg">
+            <div class="absolute -left-[31px] sm:-left-[47px] top-6 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-secondary-container border-2 border-primary flex items-center justify-center text-primary font-bold shadow-[0_0_20px_rgba(0,255,136,0.4)]">
+              <span class="material-symbols-outlined text-[20px] sm:text-[24px]">monitoring</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <span class="text-xs uppercase font-bold text-primary tracking-wider">Step 3</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Check your reports</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">View instant profit reports and analysis reviews.</p>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- 4. PRICING SECTION -->
-    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline-variant" id="Pricing">
+    <!-- 5. PRICING SECTION -->
+    <section class="w-full py-space-2xl bg-surface border-t border-outline-variant animate-fade-in-up" id="Pricing">
       <div class="max-w-[1280px] mx-auto px-margin">
         <div class="text-center max-w-xl mx-auto mb-space-2xl">
           <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-xs">Simple monthly pricing</h2>
-          <p class="font-body-lg text-body-lg text-on-surface-variant">Prices in BND. Cancel any time.</p>
+          <p class="font-body-lg text-body-lg text-on-surface-variant">Prices in BND. All plans include a 7-day free trial. Cancel any time.</p>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-stretch mb-space-2xl">
-          <!-- Starter Plan -->
-          <div class="bg-surface-container-lowest rounded-xl p-space-xl flex flex-col justify-between border border-outline">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter-lg max-w-4xl mx-auto items-stretch mb-space-2xl pt-4">
+          
+          <!-- Personal Plan (BND 59) -->
+          <div class="futuristic-card rounded-2xl p-space-xl flex flex-col justify-between border border-outline">
             <div>
-              <h3 class="font-headline-md text-headline-md text-on-surface">Starter</h3>
-              <div class="mt-space-md mb-space-lg">
-                <span class="font-display text-display text-on-surface font-bold">BND 25</span>
+              <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Personal</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-6">Designed for freelancers and independent professionals.</p>
+              <div class="mt-space-md mb-space-lg pb-space-lg border-b border-outline-variant">
+                <span class="font-display text-display text-on-surface font-bold">BND 59</span>
                 <span class="font-body-md text-body-md text-secondary"> / month</span>
               </div>
-              <div class="space-y-space-sm pt-space-md">
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">1 user</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Limited transactions per month</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Profit and loss and balance sheet</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Business health score</span></div>
+              <div class="space-y-space-sm pt-space-xs">
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Single user access</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Standard transaction recording</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Receipt scanner (up to 50/mo)</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Analysis report downloads</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Standard KAI AI assistant</span></div>
               </div>
             </div>
             <div class="pt-space-xl">
-              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn block text-center w-full h-11 leading-[44px] rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors border border-outline no-underline cursor-pointer">Choose Starter</a>
+              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn block text-center w-full h-11 leading-[44px] rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors border border-outline no-underline cursor-pointer">Start 7-Day Trial</a>
             </div>
           </div>
-          <!-- Business Plan -->
-          <div class="bg-surface-container-lowest rounded-xl p-space-xl flex flex-col justify-between shadow-[0_0_30px_rgba(0,255,136,0.15)] relative border-2 border-primary">
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-              <span class="bg-primary text-on-primary font-label-sm text-label-sm font-bold uppercase tracking-wider py-1 px-space-md rounded-full shadow-sm">Most popular</span>
+
+          <!-- Business Plan (BND 99) -->
+          <div class="futuristic-card rounded-2xl p-space-xl pt-10 flex flex-col justify-between shadow-[0_0_35px_rgba(0,255,136,0.18)] relative border-2 border-primary">
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
+              <span class="bg-primary text-on-primary font-label-sm text-label-sm font-bold uppercase tracking-wider py-1.5 px-space-md rounded-full shadow-[0_0_15px_rgba(0,255,136,0.5)]">Most popular</span>
             </div>
             <div>
-              <h3 class="font-headline-md text-headline-md text-primary font-bold">Business</h3>
-              <div class="mt-space-md mb-space-lg">
-                <span class="font-display text-display text-on-surface font-bold">BND 50</span>
+              <h3 class="font-headline-md text-headline-md text-primary font-bold mb-2">Business</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-6">Built for growing Sdn Bhd companies and active teams.</p>
+              <div class="mt-space-md mb-space-lg pb-space-lg border-b border-outline-variant">
+                <span class="font-display text-display text-on-surface font-bold">BND 99</span>
                 <span class="font-body-md text-body-md text-secondary"> / month</span>
               </div>
-              <div class="space-y-space-sm pt-space-md">
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface font-semibold">Everything in Starter</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">More users</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Unlimited transactions</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Receipt storage</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Invoicing</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">AI assistant</span></div>
+              <div class="space-y-space-sm pt-space-xs">
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Multi-user access permissions</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Unlimited receipt &amp; invoice AI scanning</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Advanced analysis reports (PDF/Excel)</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Brunei TAP &amp; SCP compliance tracking</span></div>
+                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Priority KAI AI assistant insights</span></div>
               </div>
             </div>
             <div class="pt-space-xl">
-              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn block text-center w-full h-11 leading-[44px] rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_15px_rgba(0,255,136,0.3)] font-bold no-underline cursor-pointer">Start Free Trial</a>
+              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn block text-center w-full h-11 leading-[44px] rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all shadow-[0_0_20px_rgba(0,255,136,0.35)] font-bold no-underline cursor-pointer">Start 7-Day Trial</a>
             </div>
           </div>
-          <!-- Premium Plan -->
-          <div class="bg-surface-container-lowest rounded-xl p-space-xl flex flex-col justify-between border border-outline">
-            <div>
-              <h3 class="font-headline-md text-headline-md text-on-surface">Premium</h3>
-              <div class="mt-space-md mb-space-lg">
-                <span class="font-display text-display text-on-surface font-bold">BND 100</span>
-                <span class="font-body-md text-body-md text-secondary"> / month</span>
-              </div>
-              <div class="space-y-space-sm pt-space-md">
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface font-semibold">Everything in Business</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Multiple branches or companies</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Accountant access</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">check</span><span class="font-body-md text-body-md text-on-surface">Audit trail</span></div>
-                <div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-secondary text-[18px]">schedule</span><span class="font-body-md text-body-md text-secondary">Bank connection and API (Coming soon)</span></div>
-              </div>
-            </div>
-            <div class="pt-space-xl">
-              <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn block text-center w-full h-11 leading-[44px] rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors border border-outline no-underline cursor-pointer">Choose Premium</a>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- 5. FAQ SECTION -->
-    <section class="w-full py-space-2xl bg-surface" id="FAQ">
+    <!-- 6. FAQ SECTION -->
+    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline-variant animate-fade-in-up" id="FAQ">
       <div class="max-w-[1280px] mx-auto px-margin">
-        <div class="max-w-2xl mb-space-2xl">
+        <div class="text-center max-w-xl mx-auto mb-space-2xl">
           <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-space-xs">Answers</span>
           <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Frequently asked questions</h2>
         </div>
-        <div class="max-w-3xl space-y-space-md" id="faq-accordion">
-          <div class="bg-surface-container-lowest rounded-xl border border-outline overflow-hidden">
+        <div class="max-w-3xl mx-auto space-y-space-md" id="faq-accordion">
+          
+          <!-- Q1 -->
+          <div class="futuristic-card rounded-xl border border-outline overflow-hidden">
             <button class="w-full p-space-lg flex items-center justify-between text-left focus:outline-none cursor-pointer" onclick="toggleFaq(this)" type="button">
               <span class="font-headline-sm text-headline-sm text-on-surface">Who is KIRA for?</span>
               <span class="material-symbols-outlined text-primary transform transition-transform duration-200 rotate-180 faq-icon">expand_more</span>
@@ -386,7 +492,9 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
               <p class="font-body-md text-body-md text-on-surface-variant">KIRA is designed specifically for small business owners, sole proprietors, and freelancers in Brunei who want straightforward bookkeeping without complicated accounting jargon.</p>
             </div>
           </div>
-          <div class="bg-surface-container-lowest rounded-xl border border-outline overflow-hidden">
+
+          <!-- Q2 -->
+          <div class="futuristic-card rounded-xl border border-outline overflow-hidden">
             <button class="w-full p-space-lg flex items-center justify-between text-left focus:outline-none cursor-pointer" onclick="toggleFaq(this)" type="button">
               <span class="font-headline-sm text-headline-sm text-on-surface">Is my business data safe?</span>
               <span class="material-symbols-outlined text-secondary transform transition-transform duration-200 faq-icon">expand_more</span>
@@ -395,20 +503,57 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
               <p class="font-body-md text-body-md text-on-surface-variant">Yes, your data is securely stored with encrypted transmission and private account access to protect your business records.</p>
             </div>
           </div>
+
+          <!-- Q3 (Free Trial) -->
+          <div class="futuristic-card rounded-xl border border-outline overflow-hidden">
+            <button class="w-full p-space-lg flex items-center justify-between text-left focus:outline-none cursor-pointer" onclick="toggleFaq(this)" type="button">
+              <span class="font-headline-sm text-headline-sm text-on-surface">How does the 7-day free trial work?</span>
+              <span class="material-symbols-outlined text-secondary transform transition-transform duration-200 faq-icon">expand_more</span>
+            </button>
+            <div class="px-space-lg pb-space-lg hidden faq-content">
+              <p class="font-body-md text-body-md text-on-surface-variant">You get full access to all features on your chosen plan for 7 days without needing payment details upfront. You won’t be charged unless you choose to subscribe after the trial ends.</p>
+            </div>
+          </div>
+
+          <!-- Q4 (Exports) -->
+          <div class="futuristic-card rounded-xl border border-outline overflow-hidden">
+            <button class="w-full p-space-lg flex items-center justify-between text-left focus:outline-none cursor-pointer" onclick="toggleFaq(this)" type="button">
+              <span class="font-headline-sm text-headline-sm text-on-surface">Can I export my financial reports to Excel or PDF?</span>
+              <span class="material-symbols-outlined text-secondary transform transition-transform duration-200 faq-icon">expand_more</span>
+            </button>
+            <div class="px-space-lg pb-space-lg hidden faq-content">
+              <p class="font-body-md text-body-md text-on-surface-variant">Yes, you can download your analysis reports and transaction records anytime in PDF or Excel format for your records or tax filing.</p>
+            </div>
+          </div>
+
+          <!-- Q5 (Receipt Scanner) -->
+          <div class="futuristic-card rounded-xl border border-outline overflow-hidden">
+            <button class="w-full p-space-lg flex items-center justify-between text-left focus:outline-none cursor-pointer" onclick="toggleFaq(this)" type="button">
+              <span class="font-headline-sm text-headline-sm text-on-surface">How does the receipt scanner work?</span>
+              <span class="material-symbols-outlined text-secondary transform transition-transform duration-200 faq-icon">expand_more</span>
+            </button>
+            <div class="px-space-lg pb-space-lg hidden faq-content">
+              <p class="font-body-md text-body-md text-on-surface-variant">Simply snap a photo of your receipt using your phone or upload an image. KIRA's AI automatically reads the vendor, date, and amount, logging it into your expenses instantly.</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
     <!-- 7. FINAL CALL TO ACTION -->
-    <section class="w-full py-space-2xl bg-surface-container-low border-t border-outline">
+    <section class="w-full py-space-2xl bg-surface border-t border-outline">
       <div class="max-w-[1280px] mx-auto px-margin text-center">
         <div class="max-w-2xl mx-auto flex flex-col items-center">
-          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-lg">
+          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-md">
             Ready to see how your business is doing?
           </h2>
-          <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-12 px-space-2xl rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_20px_rgba(0,255,136,0.3)] font-bold no-underline cursor-pointer">
+          <a href="#signup" onclick="openSignupModal(event)" class="start-trial-btn inline-flex items-center justify-center h-12 px-space-2xl rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all shadow-[0_0_25px_rgba(0,255,136,0.4)] font-bold no-underline cursor-pointer">
             Start Free Trial
           </a>
+          <span class="font-body-sm text-body-sm text-secondary mt-space-md flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-primary text-[16px]">lock</span> No payment card required upfront • Full feature access • Cancel anytime
+          </span>
         </div>
       </div>
     </section>
@@ -530,7 +675,7 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
           <p id="signup-status" class="text-xs font-sora text-center" role="status" aria-live="polite"></p>
 
           <!-- Submit Button -->
-          <button id="signup-submit" class="w-full py-space-md px-space-md rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-[0_0_20px_rgba(0,255,136,0.25)] font-bold cursor-pointer flex items-center justify-center text-sm mt-2 font-sora" type="submit">
+          <button id="signup-submit" class="w-full py-space-md px-space-md rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all shadow-[0_0_20px_rgba(0,255,136,0.25)] font-bold cursor-pointer flex items-center justify-center text-sm mt-2 font-sora" type="submit">
             Create account
           </button>
         </form>
@@ -539,7 +684,7 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
         <div class="mt-3 pt-2 border-t border-outline text-center">
           <p class="text-[11px] text-on-surface-variant font-sora">
             Already have an account? 
-            <a href="../login/" class="text-primary font-bold hover:underline">
+            <a href="login/index.html" class="text-primary font-bold hover:underline">
               Sign In
             </a>
           </p>
@@ -918,7 +1063,7 @@ tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#0
         showStatus("Account created successfully. Opening dashboard...");
 
         setTimeout(() => {
-          window.location.href = "../dashboard/";
+          window.location.href = "dashboard/index.html";
         }, 1000);
 
       } catch (error) {

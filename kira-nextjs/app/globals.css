@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@keyframes floatOrb1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(15vw, 15vh) scale(1.2); }
+}
+
+@keyframes floatOrb2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-18vw, -12vh) scale(1.25); }
+}
+
+@keyframes gridDrift {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+@keyframes beamSweep {
+  0% { transform: rotate(0deg) translateY(-20%); }
+  100% { transform: rotate(360deg) translateY(-20%); }
+}

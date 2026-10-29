@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Free Trial - KIRA Neural Ledger</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#050807",
+            "surface-container-lowest": "#070c0a",
+            "surface-container-low": "#090e0c",
+            "outline": "#2f4f43",
+            "primary": "#00ff88",
+            "on-surface": "#f8fafc",
+            "on-surface-variant": "#94a3b8",
+            "primary-container": "#00cc6a",
+            "on-primary": "#050807",
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface font-['Inter'] text-on-surface min-h-screen flex items-center justify-center px-4 py-8">
+
+  <div class="max-w-lg w-full bg-surface-container-lowest border border-outline p-8 rounded-2xl shadow-2xl relative text-center">
+    
+    <!-- Brand Header -->
+    <div class="mb-6">
+      <img alt="Logo" class="h-12 w-auto mx-auto mb-3 object-contain" src="https://arleta.site/interactivelink/5959/KIRALP-removebg-preview.png"/>
+      <span class="inline-block bg-primary/10 text-primary border border-primary/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Active Trial</span>
+      <h1 class="font-['Plus_Jakarta_Sans'] text-2xl font-bold text-on-surface">Welcome to Your Free Trial</h1>
+      <p id="user-email-display" class="text-xs text-on-surface-variant mt-1">Loading account details...</p>
+    </div>
+
+    <!-- Trial Status Card -->
+    <div class="bg-surface-container-low border border-outline rounded-xl p-5 mb-6 text-left space-y-3">
+      <div class="flex justify-between items-center text-xs">
+        <span class="text-on-surface-variant">Trial Status:</span>
+        <span class="text-primary font-semibold">7 Days Remaining</span>
+      </div>
+      <div class="flex justify-between items-center text-xs">
+        <span class="text-on-surface-variant">Access Tier:</span>
+        <span class="text-on-surface font-semibold">KIRA Neural Ledger Pro (Trial)</span>
+      </div>
+      <div class="w-full bg-outline/40 h-2 rounded-full overflow-hidden">
+        <div class="bg-primary h-full w-full rounded-full"></div>
+      </div>
+    </div>
+
+    <!-- Action Button to Enter Dashboard -->
+    <button id="dashboard-btn" type="button" class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold text-xs hover:bg-primary-container transition-colors cursor-pointer shadow-[0_0_15px_rgba(0,255,136,0.2)] mb-3">
+      Continue to Dashboard
+    </button>
+
+    <!-- Sign Out Option -->
+    <button id="signout-btn" type="button" class="text-xs text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+      Sign Out
+    </button>
+  </div>
+
+  <!-- Firebase Authentication & Event Listener Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_3TN44ch2T1-zmOgV8xvlq7r-jR1M8xU",
+      authDomain: "allena-admin.firebaseapp.com",
+      databaseURL: "https://allena-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "allena-admin",
+      storageBucket: "allena-admin.firebasestorage.app",
+      messagingSenderId: "529498448950",
+      appId: "1:529498448950:web:6a836ae249353dcb796497",
+      measurementId: "G-V8RJ0DB6HG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('user-email-display').textContent = `Logged in as: ${user.email}`;
+      } else {
+        window.location.href = "../login/index.html";
+      }
+    });
+
+    // Event listener attached directly to the button element to avoid module scoping issues
+    document.getElementById('dashboard-btn').addEventListener('click', () => {
+      const user = auth.currentUser;
+      if (user) {
+        localStorage.setItem(`trial_completed_${user.uid}`, "true");
+      }
+      // Force direct relative path navigation
+      window.location.href = "../dashboard/index.html";
+    });
+
+    document.getElementById('signout-btn').addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "../login/index.html";
+      } catch (error) {
+        console.error("Sign out error:", error);
+      }
+    });
+  </script>
+</body>
+</html>
